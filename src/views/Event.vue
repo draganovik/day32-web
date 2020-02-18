@@ -3,21 +3,22 @@
     <button class="abt" v-on:click="toggleEventCard()">Add new activity</button>
     <section ref="overlay" class="noned push">
       <div class="page" ref="page">
-        <form action>
-          <input type="text" placeholder="Title" autofocus v-model="title" />
+        <div class="form">
+          <input type="text" placeholder="Title" v-model="title" ref="finput" tabindex="1"/>
           <input
             type="button"
             class="btn"
             style="width:70%;box-sizing:border-box;"
             ref="adbtn"
             v-on:click="allDay()"
-            value="All day event"
+            value="Set without time"
+            tabindex="-1"
           />
-          <input type="datetime-local" ref="sdate" v-model="startdate" />
-          <input type="datetime-local" ref="edate" class="tdate" v-model="enddate" />
-          <input type="date" ref="adate" class="noned" v-model="date" />
-          <input type="text" placeholder="Location" v-model="location" />
-          <select name="color" id="clr" v-model="colorid">
+          <input type="datetime-local" ref="sdate" v-model="startdate" tabindex="2"/>
+          <input type="datetime-local" ref="edate" class="tdate" v-model="enddate" tabindex="3"/>
+          <input type="date" ref="adate" class="noned" v-model="date" tabindex="4"/>
+          <input type="text" placeholder="Location" v-model="location" tabindex="5"/>
+          <select name="color" id="clr" v-model="colorid" tabindex="6">
             <option value="1">Levander</option>
             <option value="2">Sage</option>
             <option value="3">Grape</option>
@@ -30,12 +31,11 @@
             <option value="10">Basil</option>
             <option value="11">Tomato</option>
           </select>
-          <textarea name="desc" rows="8" cols="4" placeholder="Description" v-model="desc"></textarea>
-        </form>
-        <br />
-        <div style="display:flex;justify-content: space-between;width:70%;margin:auto">
+          <textarea name="desc" rows="8" cols="4" placeholder="Description" v-model="desc" tabindex="7"></textarea>
+        <div style="display:flex; justify-content: space-between; width:70%; margin: auto">
           <button class="btn ac" v-on:click="toggleEventCard()">Discard</button>
-          <button class="btn ac" v-on:click="addEvent()">Save</button>
+          <button class="btn ac" v-on:click="addEvent()" tabindex="8" style="background-color: var(--accent);">Save</button>
+        </div>
         </div>
       </div>
     </section>
@@ -58,6 +58,7 @@ export default {
             overlay.classList.remove('push')
           }, 200)
         }, 200)
+        this.$refs.finput.focus()
       } else {
         overlay.classList.add('push')
         setTimeout(function () {
@@ -176,10 +177,10 @@ section {
   border: 1px solid var(--modal);
   box-sizing: border-box;
   max-width: 512px;
+  max-height: 600px;
   width: 100%;
   margin: auto;
   padding: 1rem;
-  padding-top: 3rem;
   border-radius: 6px;
   overflow-y: scroll hidden;
   z-index: 6;
@@ -188,16 +189,25 @@ section {
   transition: all 0.5s;
   overflow-x: hidden;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
-form {
+.form {
   text-align: center;
+  width: 100%;
+  max-width: 512px;
 }
-form input,
-form textarea,
-form select {
+.form select {
+  all: unset;
+}
+.form input,
+.form textarea,
+.form select {
   display: block;
   margin: 1rem;
-  padding: 0.4rem;
+  padding: 0.6rem 1rem;
   text-align: center;
   margin: 0.8rem auto;
   width: 70%;
@@ -251,7 +261,8 @@ button {
   font-size: 1rem;
 }
 .ac {
-  padding: 0.4rem 1rem;
+  padding: 0.4rem 0;
+  width: calc(50% - 1rem);
 }
 @media (hover: hover) {
   .abt:hover {
@@ -264,6 +275,7 @@ button {
   }
   .page {
     max-width: initial;
+    max-height: initial;
     height: 100vh;
     top: 0;
     border: none;

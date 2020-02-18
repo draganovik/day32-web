@@ -178,7 +178,7 @@ header * {
   display: none !important;
 }
 .slide {
-  transform: translateX(-300px);
+  transform: translateX(-303px);
 }
 .sing-out {
   color: inherit;

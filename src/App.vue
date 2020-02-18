@@ -23,7 +23,7 @@ export default {
     }
   },
   created: async function () {
-    localStorage.setItem('version', '1.0.10121.1300')
+    localStorage.setItem('version', '1.0.10218.1000')
     this.$gapi.isSignedIn().then(result => {
       localStorage.setItem('isSignedIn', result)
       this.isSignedIn = result
