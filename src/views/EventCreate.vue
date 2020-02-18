@@ -1,8 +1,8 @@
 <template>
   <div>
     <button class="abt" v-on:click="toggleEventCard()">Add new activity</button>
-    <section ref="overlay" class="noned push">
-      <div class="page" ref="page">
+    <section ref="overlay" class="noned push" v-on:click="toggleEventCard()">
+      <div class="page" ref="page" v-on:click.stop>
         <div class="form">
           <input type="text" placeholder="Title" v-model="title" ref="finput" tabindex="1"/>
           <input
@@ -51,13 +51,12 @@ export default {
         overlay.classList.contains('push') &&
         overlay.classList.contains('noned')
       ) {
+        this.setDates()
         overlay.classList.remove('noned')
+        overlay.classList.remove('hide')
         setTimeout(function () {
-          overlay.classList.remove('hide')
-          setTimeout(function () {
-            overlay.classList.remove('push')
-          }, 200)
-        }, 200)
+          overlay.classList.remove('push')
+        }, 1)
         this.$refs.finput.focus()
       } else {
         overlay.classList.add('push')
@@ -66,7 +65,7 @@ export default {
           setTimeout(function () {
             overlay.classList.add('noned')
           }, 200)
-        }, 400)
+        }, 100)
       }
     },
     addEvent: function () {
@@ -138,6 +137,11 @@ export default {
         this.$refs.sdate.classList.remove('noned')
         this.$refs.edate.classList.remove('noned')
       }
+    },
+    setDates: function () {
+      this.startdate = new Date(new Date(Date.now()).getTime() - (new Date(Date.now()).getTimezoneOffset() * 60000)).toISOString().substring(0, 16)
+      this.date = this.startdate.substring(0, 10)
+      this.enddate = this.startdate
     }
   },
   data () {

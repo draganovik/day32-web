@@ -1,8 +1,9 @@
 <template>
   <main class="home">
-    <Event></Event>
+    <EventEdit :event="items[this.selectedItem]" :toggle="toggleEdit"></EventEdit>
+    <EventCreate></EventCreate>
     <ul class="card-container">
-      <EventCard v-for="item in items" :key="item.id" :item="item"></EventCard>
+      <EventCard v-for="item in items" :key="item.id" :item="item" v-on:click.native="selectEvent(items.indexOf(item))"></EventCard>
       <h1 class="h1-center" v-if="items.length < 1">You have no upcoming events!</h1>
       <br />
       <br />
@@ -16,20 +17,28 @@
 
 <script>
 import EventCard from '@/components/EventCard.vue'
-import Event from '@/views/Event.vue'
+import EventEdit from '@/components/EventEdit.vue'
+import EventCreate from '@/views/EventCreate.vue'
 
 export default {
   name: 'home',
   data: function () {
     return {
-      items: JSON.parse(localStorage.getItem('Events'))
+      items: JSON.parse(localStorage.getItem('Events')),
+      selectedItem: -1,
+      toggleEdit: null
     }
   },
   components: {
     EventCard,
-    Event
+    EventCreate,
+    EventEdit
   },
   methods: {
+    selectEvent: function (itemId) {
+      this.selectedItem = itemId
+      this.toggleEdit = Date.now()
+    },
     getEvents: function () {
       this.$gapi
         .request({
