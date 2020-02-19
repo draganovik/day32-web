@@ -82,13 +82,17 @@ export default {
         }, 100)
       }
     },
+    validateTime: function () {
+      if (new Date(this.event.start.date)) {
+        if (new Date(this.event.start.date) <= new Date(this.event.end.date)) return true
+      }
+      if (new Date(this.event.start.dateTime)) {
+        if (new Date(this.event.start.dateTime) <= new Date(this.event.end.dateTime)) return true
+      }
+      return false
+    },
     updateEvent: function () {
-      if (
-        this.event.summary !== '' &&
-        ((new Date(this.event.date) > Date.now() &&
-          new Date(this.event.date) < new Date(this.event.end.dateTime)) ||
-          new Date(this.event.start.date) >= Date.now())
-      ) {
+      if (this.event.summary !== '' && this.validateTime()) {
         this.$gapi
           ._libraryInit('client', {
             discoveryDocs: [
@@ -102,29 +106,42 @@ export default {
               resource: this.event
             }
             if (this.$refs.adate.classList.contains('noned')) {
-              // TODO Fix Google time standard @ (RFC3339)
-              this.event.start.dateTime = new Date(this.event.start.dateTime).toISOString().replace(':00.000Z', '+01:00')
-              this.event.end.dateTime = new Date(this.event.end.dateTime).toISOString().replace(':00.000Z', '+01:00')
-              console.log(this.event.start.dateTime)
+              delete this.event.start.date
+              delete this.event.end.date
+              this.event.start.dateTime = new Date(this.event.start.dateTime).toISOString()
+              this.event.end.dateTime = new Date(this.event.end.dateTime).toISOString()
               return client.calendar.events.update(ev)
             }
+            delete this.event.start.dateTime
+            delete this.event.end.dateTime
+            this.event.start.date = this.event.start.date.substring(0, 10)
             this.event.end.date = this.event.start.date
             return client.calendar.events.update(ev)
           })
           .then(this.toggleEventCard())
           .then(setTimeout(function () {
-            // TODO Fix coloring on changed value or just
-            // location.reload()
+            location.reload()
           }, 1500))
       }
     },
     allDay: function () {
       if (this.$refs.adate.classList.contains('noned')) {
+        console.log(this.event.start.date)
+        /* TODO Date to time convert
+        if (this.event.start.dateTime) {
+          this.event.start.date = this.event.start.dateTime.substring(0, 10)
+          this.event.end.date = this.event.end.dateTime.substring(0, 10)
+        } */
         this.$refs.adate.classList.remove('noned')
         this.$refs.adbtn.classList.add('actbt')
         this.$refs.sdate.classList.add('noned')
         this.$refs.edate.classList.add('noned')
       } else {
+        /* TODO Date to time convert
+        if (this.event.start.dateTime === undefined) {
+          this.event.start.dateTime = new Date(new Date(this.event.start.date).getTime() - (new Date(this.event.start.date).getTimezoneOffset() * 60000)).toISOString()
+          this.event.end.dateTime = new Date(new Date(this.event.end.date).getTime() - (new Date(this.event.end.date).getTimezoneOffset() * 60000)).toISOString()
+        } */
         this.$refs.adate.classList.add('noned')
         this.$refs.adbtn.classList.remove('actbt')
         this.$refs.sdate.classList.remove('noned')
