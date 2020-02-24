@@ -3,7 +3,6 @@
     <nav ref="navSlide" class="slide">
       <div>
         <div class="user-card">
-          <img ref="userImage" alt="User Image" :src="userImage" />
           <label ref="userName">{{ userName }}</label>
         </div>
         <hr style="margin:0" />
@@ -16,19 +15,6 @@
           adaptive icon on supported platforms...
         </p>
         <a class="clean-a" href="mailto:mladen@draganovik.com">mladen@draganovik.com</a>
-        <!--
-        <ul class="nav-section-links">
-
-          <router-link to="/" v-on:click.native="toggleNavigation()">
-            <ion-icon name="calendar"></ion-icon>
-            <label>Events</label>
-          </router-link>
-          <router-link to="/explore" v-on:click.native="toggleNavigation()">
-            <ion-icon name="compass"></ion-icon>
-            <label>Explore</label>
-          </router-link>
-        </ul>
-        -->
         <br />
       </div>
       <div class="footer">
@@ -48,10 +34,10 @@
     </nav>
     <div class="nav-overlay hide noned" ref="navOverlay" v-on:click="toggleNavigation()"></div>
     <header>
-      <button v-on:click="toggleNavigation()" class="app-hamburger">
-        <label>☰</label>
-      </button>
       <label class="app-title">{{ this.locationTitle }}</label>
+      <button v-on:click="toggleNavigation()" class="app-hamburger">
+        <img ref="userImage" :src="userImage"/>
+      </button>
     </header>
   </section>
 </template>
@@ -80,7 +66,7 @@ nav {
 .user-card {
   position: relative;
   text-align: left;
-  padding: 1.2rem;
+  padding: 2rem;
 }
 .user-card img {
   width: 3rem;
@@ -145,7 +131,10 @@ header {
   display: flex;
   position: relative;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+  max-width: 600px;
+  margin: 0 auto 1.5rem auto;
 }
 header * {
   margin: 0.4rem;
@@ -154,13 +143,16 @@ header * {
   all: initial;
   display: block;
   text-align: center;
-  font-size: 1.5rem;
-  border-radius: 4px;
+  border-radius: 50%;
   transition-duration: 0.3s;
 }
+.app-hamburger img {
+  border-radius: 50%;
+  width: 2.4rem;
+  height: 2.4rem;
+  background-color: whitesmoke;
+}
 .app-hamburger * {
-  padding: 0 0.6rem;
-  padding-bottom: 0.25rem;
   display: block;
   color: var(--foreground) !important;
 }

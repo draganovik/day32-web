@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="abt" v-on:click="toggleEventCard()">Add new activity</button>
+    <button class="abt" v-on:click="toggleEventCard()">+ New activity</button>
     <section ref="overlay" class="noned push" v-on:click="toggleEventCard()">
       <div class="page" ref="page" v-on:click.stop>
         <div class="form">
@@ -36,6 +36,7 @@
           <button class="btn ac" v-on:click="toggleEventCard()">Discard</button>
           <button class="btn ac" v-on:click="addEvent()" tabindex="8" style="background-color: var(--accent);">Save</button>
         </div>
+        <br>
         </div>
       </div>
     </section>
@@ -188,14 +189,12 @@ section {
   border-radius: 6px;
   overflow-y: scroll hidden;
   z-index: 6;
-  height: 84vh;
-  min-height: 300px;
+  min-height: min-content;
   transition: all 0.5s;
   overflow-x: hidden;
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
 }
 .form {
@@ -276,10 +275,14 @@ button {
 @media screen and (max-width: 670px), screen and (max-height: 660px) {
   section {
     padding: 0;
+    background-color: var(--background);
+  }
+  section * {
+    transition-duration: 0;
   }
   .page {
     max-width: initial;
-    max-height: initial;
+    max-height: max-content;
     height: 100vh;
     top: 0;
     border: none;

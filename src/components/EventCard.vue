@@ -234,7 +234,7 @@ li {
   box-sizing: border-box;
   margin: 0.5rem auto;
   max-width: 512px;
-  min-width: 300px;
+  min-width: 280px;
   padding: 0.6rem 0.8rem;
   text-align: left;
   transition-duration: 0.4s;
