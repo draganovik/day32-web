@@ -280,6 +280,7 @@ section {
   display: flex;
   align-items: center;
   flex-direction: column;
+  overflow: overlay;
 }
 .form {
   text-align: center;
@@ -287,7 +288,6 @@ section {
   max-width: 512px;
   min-width: 300px;
   margin-top: 3.5rem;
-  overflow: overlay;
 }
 .form select {
   all: unset;
