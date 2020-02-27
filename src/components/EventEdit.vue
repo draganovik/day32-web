@@ -266,7 +266,6 @@ section {
   border: 1px solid var(--modal);
   box-sizing: border-box;
   max-width: 512px;
-  max-height: 600px;
   width: 100%;
   margin: auto;
   padding: 1rem;
