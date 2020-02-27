@@ -226,6 +226,7 @@ section {
   width: 100%;
   margin: auto;
   padding: 1rem;
+  padding-top: 4.5rem;
   border-radius: 6px;
   overflow-y: scroll hidden;
   z-index: 6;
@@ -243,7 +244,6 @@ section {
   width: 100%;
   max-width: 512px;
   min-width: 300px;
-  margin-top: 3.5rem;
 }
 .form select {
   all: unset;
