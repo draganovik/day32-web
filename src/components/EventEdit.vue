@@ -2,7 +2,13 @@
   <section ref="overlay" class="noned push" v-on:click="toggleEventCard()">
     <div class="page" ref="page" v-on:click.stop>
       <div class="form">
-        <input type="text" placeholder="Title" v-model="event.summary" ref="finput" tabindex="1" />
+        <input
+          type="text"
+          placeholder="Title"
+          v-model="event.summary"
+          ref="finput"
+          tabindex="1"
+        />
         <input
           type="button"
           class="btn"
@@ -12,7 +18,12 @@
           value="Set without time"
           tabindex="-1"
         />
-        <input type="datetime-local" ref="sdate" v-model="event.start.dateTime" tabindex="2" />
+        <input
+          type="datetime-local"
+          ref="sdate"
+          v-model="event.start.dateTime"
+          tabindex="2"
+        />
         <input
           type="datetime-local"
           ref="edate"
@@ -20,9 +31,21 @@
           v-model="event.end.dateTime"
           tabindex="3"
         />
-        <input type="date" ref="adate" class="noned" v-model="event.start.date" tabindex="4" />
-        <input type="text" placeholder="Location" v-model="event.location" tabindex="5" />
+        <input
+          type="date"
+          ref="adate"
+          class="noned"
+          v-model="event.start.date"
+          tabindex="4"
+        />
+        <input
+          type="text"
+          placeholder="Location"
+          v-model="event.location"
+          tabindex="5"
+        />
         <select name="color" id="clr" v-model="event.colorId" tabindex="6">
+          <option value="undefined">Default</option>
           <option value="1">Levander</option>
           <option value="2">Sage</option>
           <option value="3">Grape</option>
@@ -43,16 +66,20 @@
           v-model="event.description"
           tabindex="7"
         ></textarea>
-        <div style="display:flex; justify-content: space-between; width:70%; margin: auto">
+        <div
+          style="display:flex; justify-content: space-between; width:70%; margin: auto"
+        >
           <button class="btn ac" v-on:click="toggleEventCard()">Discard</button>
           <button
             class="btn ac"
             v-on:click="updateEvent()"
             tabindex="8"
-            style="background-color: var(--accent);"
-          >Save</button>
+            style="background-color: var(--accent); color: white"
+          >
+            Save
+          </button>
         </div>
-        <br>
+        <br />
       </div>
     </div>
   </section>
@@ -85,10 +112,13 @@ export default {
     },
     validateTime: function () {
       if (new Date(this.event.start.date)) {
-        if (new Date(this.event.start.date) <= new Date(this.event.end.date)) return true
+        if (new Date(this.event.start.date) <= new Date(this.event.end.date)) { return true }
       }
       if (new Date(this.event.start.dateTime)) {
-        if (new Date(this.event.start.dateTime) <= new Date(this.event.end.dateTime)) return true
+        if (
+          new Date(this.event.start.dateTime) <=
+          new Date(this.event.end.dateTime)
+        ) { return true }
       }
       return false
     },
@@ -109,8 +139,12 @@ export default {
             if (this.$refs.adate.classList.contains('noned')) {
               delete this.event.start.date
               delete this.event.end.date
-              this.event.start.dateTime = new Date(this.event.start.dateTime).toISOString()
-              this.event.end.dateTime = new Date(this.event.end.dateTime).toISOString()
+              this.event.start.dateTime = new Date(
+                this.event.start.dateTime
+              ).toISOString()
+              this.event.end.dateTime = new Date(
+                this.event.end.dateTime
+              ).toISOString()
               return client.calendar.events.update(ev)
             }
             delete this.event.start.dateTime
@@ -120,14 +154,16 @@ export default {
             return client.calendar.events.update(ev)
           })
           .then(this.toggleEventCard())
-          .then(setTimeout(function () {
-            location.reload()
-          }, 1500))
+          .then(
+            setTimeout(function () {
+              // TODO Replace logic with vuex no-reload solution
+              location.reload()
+            }, 1500)
+          )
       }
     },
     allDay: function () {
       if (this.$refs.adate.classList.contains('noned')) {
-        console.log(this.event.start.date)
         /* TODO Date to time convert
         if (this.event.start.dateTime) {
           this.event.start.date = this.event.start.dateTime.substring(0, 10)
@@ -157,9 +193,9 @@ export default {
       default: function () {
         return {
           summary: '',
-          location: '',
-          description: '',
-          colorId: '',
+          location: undefined,
+          description: undefined,
+          colorId: 0,
           start: {
             dateTime: new Date(Date.now()).toISOString()
           },
@@ -172,19 +208,32 @@ export default {
   },
   watch: {
     toggle: function (update, outdate) {
-      if (this.$refs.overlay.classList.contains('noned') && update !== undefined) {
+      if (
+        this.$refs.overlay.classList.contains('noned') &&
+        update !== undefined
+      ) {
         if (this.event.summary !== '') {
           if (
             (this.event.end.dateTime === undefined &&
-          !this.$refs.edate.classList.contains('noned')) ||
-        (this.event.end.dateTime !== undefined &&
-          this.$refs.edate.classList.contains('noned'))
+              !this.$refs.edate.classList.contains('noned')) ||
+            (this.event.end.dateTime !== undefined &&
+              this.$refs.edate.classList.contains('noned'))
           ) {
             this.allDay()
           }
           if (!this.$refs.edate.classList.contains('noned')) {
-            this.event.start.dateTime = new Date(new Date(this.event.start.dateTime).getTime() - (new Date(this.event.start.dateTime).getTimezoneOffset() * 60000)).toISOString().substring(0, 16)
-            this.event.end.dateTime = new Date(new Date(this.event.end.dateTime).getTime() - (new Date(this.event.end.dateTime).getTimezoneOffset() * 60000)).toISOString().substring(0, 16)
+            this.event.start.dateTime = new Date(
+              new Date(this.event.start.dateTime).getTime() -
+                new Date(this.event.start.dateTime).getTimezoneOffset() * 60000
+            )
+              .toISOString()
+              .substring(0, 16)
+            this.event.end.dateTime = new Date(
+              new Date(this.event.end.dateTime).getTime() -
+                new Date(this.event.end.dateTime).getTimezoneOffset() * 60000
+            )
+              .toISOString()
+              .substring(0, 16)
           }
           this.toggleEventCard()
         }
@@ -236,6 +285,9 @@ section {
   text-align: center;
   width: 100%;
   max-width: 512px;
+  min-width: 300px;
+  margin-top: 3.5rem;
+  overflow: overlay;
 }
 .form select {
   all: unset;
@@ -249,7 +301,7 @@ section {
   text-align: center;
   margin: 0.8rem auto;
   width: 70%;
-  background-color: var(--modal);
+  background-color: var(--control);
   border-radius: 6px;
   box-sizing: border-box;
   border: none;
@@ -264,9 +316,6 @@ textarea {
 }
 .push {
   padding-top: 100vh;
-}
-.actbt {
-  background-color: var(--accent80) !important;
 }
 button {
   padding: 0.2rem 0.8rem;

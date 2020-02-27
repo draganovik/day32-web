@@ -3,40 +3,52 @@
     <nav ref="navSlide" class="slide">
       <div>
         <div class="user-card">
-          <label ref="userName">{{ userName }}</label>
+          <label ref="userName">{{ user.name }}</label>
         </div>
         <hr style="margin:0" />
         <br />
         <h2>About</h2>
         <p class="about">
-          This web application is made using pure VueJS JavaScript framework
-          to access Google Calendar API via NodeJS package,
-          This is a Progressive Web Application with dark/light mode and
-          adaptive icon on supported platforms...
+          This web application is made using pure VueJS JavaScript framework to
+          access Google Calendar API via NodeJS package, This is a Progressive
+          Web Application with dark/light mode and adaptive icon on supported
+          platforms...
         </p>
-        <a class="clean-a" href="mailto:mladen@draganovik.com">mladen@draganovik.com</a>
+        <a class="clean-a" href="mailto:mladen@draganovik.com"
+          >mladen@draganovik.com</a
+        >
         <br />
       </div>
       <div class="footer">
-        <button id="signout_button" class="btn" @click="signout">Sign out</button>
+        <button id="signout_button" class="btn" @click="signout">
+          Sign out
+        </button>
         <br />
         <br />
         <button class="btn cdark" @click="setScheme">Manual dark mode</button>
         <br />
         <br />
         <footer>
-          <a class="clean-a" href="https://draganovik.com">Day32 Version {{this.version}}</a>
+          <a class="clean-a" href="https://draganovik.com"
+            >Day32 Version {{ version }}</a
+          >
           <br />
           <br />
-          <a href="https://draganovik.com">© 2020 Mladen D. All rights reserved.</a>
+          <a href="https://draganovik.com"
+            >© 2020 Mladen D. All rights reserved.</a
+          >
         </footer>
       </div>
     </nav>
-    <div class="nav-overlay hide noned" ref="navOverlay" v-on:click="toggleNavigation()"></div>
+    <div
+      class="nav-overlay hide noned"
+      ref="navOverlay"
+      v-on:click="toggleNavigation()"
+    ></div>
     <header>
       <label class="app-title">{{ this.locationTitle }}</label>
       <button v-on:click="toggleNavigation()" class="app-hamburger">
-        <img ref="userImage" :src="userImage"/>
+        <img ref="userImage" :src="user.imageURL" />
       </button>
     </header>
   </section>
@@ -127,7 +139,7 @@ header {
   text-align: left;
   width: 100%;
   z-index: 2;
-  padding: 1.6rem 1.2rem;
+  padding: 2rem 1.2rem 1rem 1.2rem;
   display: flex;
   position: relative;
   flex-direction: row;
@@ -160,7 +172,7 @@ header * {
   background-color: var(--accent80);
 }
 .app-title {
-  font-size: 1.6rem;
+  font-size: 1.65rem;
   font-weight: 600;
 }
 .hide {
@@ -236,17 +248,19 @@ footer * {
 export default {
   data: function () {
     return {
-      version: localStorage.getItem('version'),
       locationTitle: 'Events',
-      userImage: 0,
-      userName: 'User Name'
+      version: localStorage.getItem('version')
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.state.appUser
     }
   },
   created: async function () {
     this.$gapi.currentUser().then(user => {
       if (user) {
-        this.userName = user.name
-        this.userImage = user.image
+        this.$store.commit('LOAD_USER_DATA', user)
       } else {
         console.log('No user is connected.')
       }

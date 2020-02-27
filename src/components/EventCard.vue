@@ -1,9 +1,13 @@
 <template>
   <li ref="card">
-    <div class="delete-event" ref="exmark" v-on:click.stop="deleteEvent()">{{ this.exmark }}</div>
+    <div class="delete-event" ref="exmark" v-on:click.stop="deleteEvent()">
+      {{ this.exmark }}
+    </div>
     <label>{{ this.item.summary }}</label>
     <div class="tags">
-      <button v-for="tg in this.tags" :key="item.id + tg.show()" class="tag">{{ tg.show() }}</button>
+      <button v-for="tg in this.tags" :key="item.id + tg.show()" class="tag">
+        {{ tg.show() }}
+      </button>
     </div>
     <div class="ltr">
       <p>{{ this.getDate() }}</p>
@@ -201,6 +205,7 @@ export default {
       if (!this.toDelete) {
         this.exmark = 'Delete event'
         setTimeout(function () {
+          // TODO Replace logic with vuex no-reload solution
           location.reload()
         }, 800)
         this.toDelete = true
@@ -273,7 +278,7 @@ p {
   margin: 0;
 }
 .levander {
-  border-color: rgb(208, 208, 235);
+  border-color: #c7c7ed;
 }
 .sage {
   border-color: #33b679;
