@@ -41,7 +41,7 @@ export default {
 html,
 body,
 #app {
-  font-family: "Nunito", "Avenir", sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-size: 11pt !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -63,16 +63,13 @@ body,
   display: inline-block;
   text-align: center;
   font-family: inherit;
-  border-radius: 3rem;
-  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  padding: 0.4rem 1.4rem;
   transition-duration: 0.3s;
   background-color: var(--control);
   color: var(--foreground);
   cursor: pointer;
   border: 1px solid var(--shadow) !important;
-}
-.btn:active {
-  background-color: var(--accent80);
 }
 .tag {
   all: initial;
@@ -99,8 +96,8 @@ body,
 }
 @media (hover: hover) {
   .btn:hover {
-    background-color: var(--control);
-    border: 1px solid var(--control) !important;
+    background-color: var(--accent80) !important;
+    border: 1px solid var(--foreground) !important;
   }
   .tag:hover {
     background-color: var(--active);
@@ -119,7 +116,11 @@ body,
     --control: #e4e4e4;
   }
   .cdark {
-    font-size: 0.8rem !important;
+    font-size: 0.84rem !important;
+    display: block;
+    margin: auto;
+    margin-top: 1rem;
+    line-height: 1.1rem
   }
 }
 @media (prefers-color-scheme: dark) {
@@ -135,8 +136,18 @@ body,
     --control: #333333;
   }
   .cdark {
-    display: none !important;
-    font-size: 0.8rem !important;
+    display: none;
   }
+}
+.dark-scheme {
+  --accent: #5f55b6;
+  --accent80: #5f55b6a5;
+  --background: #202020;
+  --active: #202020da;
+  --foreground: #f7f7f7;
+  --modal: black;
+  --shadow: #53535340;
+  --dropshadow: 0px 1px 6px 0px rgba(187, 187, 187, 0.2);
+  --control: #333333;
 }
 </style>

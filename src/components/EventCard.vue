@@ -237,9 +237,9 @@ li {
   border-radius: 6px;
   overflow: auto;
   box-sizing: border-box;
-  margin: 0.5rem auto;
+  margin: 0.4rem auto;
   max-width: 512px;
-  min-width: 280px;
+  min-width: 200px;
   padding: 0.6rem 0.8rem;
   text-align: left;
   transition-duration: 0.4s;

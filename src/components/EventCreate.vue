@@ -1,8 +1,8 @@
 <template>
   <div>
-    <button class="abt" v-on:click="toggleEventCard()">+ New activity</button>
-    <section ref="overlay" class="noned push" v-on:click="toggleEventCard()">
-      <div class="page" ref="page" v-on:click.stop>
+    <button class="btn" id="btn-action" v-on:click="toggleEventCard()">+ New activity</button>
+    <section ref="overlay" class="overlay noned push" v-on:click="toggleEventCard()">
+      <div class="modal-page" ref="page" v-on:click.stop>
         <div class="form">
           <input
             type="text"
@@ -79,7 +79,7 @@
               tabindex="8"
               style="background-color: var(--accent); color: white"
             >
-              Save
+              Add
             </button>
           </div>
           <br />
@@ -199,13 +199,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.bt {
-  padding: 0.5rem;
-  margin: 0.5rem;
-  width: 4rem;
-}
-section {
+<style>
+.overlay {
   display: block;
   position: fixed;
   width: 100%;
@@ -217,9 +212,9 @@ section {
   transition: all 0.5s;
   background-color: var(--shadow);
 }
-.page {
+.modal-page {
   background-color: var(--background);
-  border: 1px solid var(--modal);
+  border: 1px solid var(--accent80);
   box-sizing: border-box;
   max-width: 512px;
   width: 100%;
@@ -238,18 +233,35 @@ section {
   flex-direction: column;
   overflow: overlay;
 }
-.form {
+.modal-page .form {
   text-align: center;
   width: 100%;
   max-width: 512px;
   min-width: 300px;
 }
-.form select {
+.modal-page .form select {
   all: unset;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--foreground) 50%),
+    linear-gradient(135deg, var(--foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.35rem) calc(1.15rem),
+    calc(100% - 1rem) calc(1.15rem);
+  background-size:
+    0.35rem 0.35rem,
+    0.35rem 0.35rem,
+    0.2rem 1.5em;
+  background-repeat: no-repeat;
 }
-.form input,
-.form textarea,
-.form select {
+.modal-page .form input,
+.modal-page .form textarea,
+.modal-page .form select {
   display: block;
   margin: 1rem;
   padding: 0.6rem 1rem;
@@ -265,63 +277,54 @@ section {
   font-family: inherit;
   font-size: 1.2rem;
 }
-textarea {
+.modal-page textarea {
   text-align: left !important;
   height: 6rem;
 }
 .push {
   padding-top: 100vh;
 }
-.abt {
-  all: unset;
+#btn-action {
   user-select: none;
   position: fixed;
-  bottom: 2.8rem;
-  right: 2rem;
-  background-color: var(--accent);
-  color: white;
-  font-weight: 600;
-  padding: 1rem;
-  border-radius: 1.75rem;
-  -webkit-box-shadow: var(--dropshadow);
-  -moz-box-shadow: var(--dropshadow);
-  box-shadow: var(--dropshadow);
+  bottom: 6vh;
+  right: 4vw;
+  border-radius: 2rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
   box-sizing: border-box;
   transition-duration: 0.2s;
-  min-width: 3rem;
-  font-size: 1rem;
   text-align: center;
+  font-size: 1rem;
+  line-height: 1.8rem;
+  background-color: var(--accent);
+  color: white;
   z-index: 3;
 }
-.abt:active {
-  font-size: 0.96rem;
-  bottom: 2.82rem;
-  right: 2.02rem;
+#btn-action:active {
+  border-color: var(--accent) !important
 }
-button {
-  padding: 0.2rem 0.8rem;
-  font-size: 1rem;
-}
-.ac {
+.modal-page .ac {
   padding: 0.4rem 0;
   width: calc(50% - 1rem);
 }
 @media (hover: hover) {
-  .abt:hover {
+  #btn-action:hover {
     cursor: pointer;
+    background-color: var(--accent) !important;
   }
 }
 @media screen and (max-width: 670px), screen and (max-height: 660px) {
-  section {
+  .overlay {
     padding: 0;
     background-color: var(--background);
   }
-  section * {
+  .overlay * {
     transition-duration: 0;
   }
-  .page {
+  .modal-page {
     max-width: initial;
-    max-height: max-content;
+    max-height: initial;
     height: 100vh;
     top: 0;
     border: none;

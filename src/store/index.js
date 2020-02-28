@@ -7,12 +7,12 @@ const Storage = new VuexPersistence({
   key: 'Application Logic'
 })
 
-localStorage.setItem('version', '1.1.2002.2705')
+localStorage.setItem('version', '1.1.2002.2806')
 
 export const store = new Vuex.Store({
   state: {
     appTheme: 'system',
-    appVersion: '1.1.2002.2705',
+    appVersion: '1.1.2002.2806',
     appAuthState: true,
     appUser: {
       name: 0,

@@ -1,50 +1,33 @@
 <template>
   <section>
-    <nav ref="navSlide" class="slide">
-      <div>
-        <div class="user-card">
-          <label ref="userName">{{ user.name }}</label>
+    <section ref="overlay" class="overlay noned push" v-on:click="toggleNavigation()">
+      <div id="user-modal" class="modal-page">
+        <div>
+          <div class="user-card">
+            <label ref="userName">Hello {{ user.name }}!</label>
+          </div>
+          <hr>
+          <br>
+          <h2>Day32</h2>
+          <p class="about">
+            This web application is made using pure VueJS JavaScript framework to
+            access Google Calendar API via NodeJS package, This is a Progressive
+            Web Application with dark/light mode and adaptive icon on supported
+            platforms...
+          </p>
+          <a class="clean-a" href="mailto:mladen@draganovik.com">mladen@draganovik.com</a>
+          <div class="theme-n-log">
+          <button id="signout_button" class="btn" @click.stop="signout">Sign out</button>
+          <button class="btn cdark" @click.stop="setScheme">Toggle dark mode</button>
         </div>
-        <hr style="margin:0" />
-        <br />
-        <h2>About</h2>
-        <p class="about">
-          This web application is made using pure VueJS JavaScript framework to
-          access Google Calendar API via NodeJS package, This is a Progressive
-          Web Application with dark/light mode and adaptive icon on supported
-          platforms...
-        </p>
-        <a class="clean-a" href="mailto:mladen@draganovik.com"
-          >mladen@draganovik.com</a
-        >
-        <br />
-      </div>
-      <div class="footer">
-        <button id="signout_button" class="btn" @click="signout">
-          Sign out
-        </button>
-        <br />
-        <br />
-        <button class="btn cdark" @click="setScheme">Manual dark mode</button>
-        <br />
-        <br />
+        </div>
         <footer>
-          <a class="clean-a" href="https://draganovik.com"
-            >Day32 Version {{ version }}</a
-          >
-          <br />
-          <br />
-          <a href="https://draganovik.com"
-            >© 2020 Mladen D. All rights reserved.</a
-          >
+          <p class="clean-a">Version {{ version }}</p>
+          <a href="https://draganovik.com">© 2020 Mladen D. All rights reserved.</a>
         </footer>
       </div>
-    </nav>
-    <div
-      class="nav-overlay hide noned"
-      ref="navOverlay"
-      v-on:click="toggleNavigation()"
-    ></div>
+    </section>
+    <div class="nav-overlay hide noned" ref="navOverlay" v-on:click="toggleNavigation()"></div>
     <header>
       <label class="app-title">{{ this.locationTitle }}</label>
       <button v-on:click="toggleNavigation()" class="app-hamburger">
@@ -55,83 +38,21 @@
 </template>
 
 <style>
-.nav-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: var(--shadow);
-  transition: all 0.7s;
-  z-index: 5;
+#user-modal {
+  padding-top: 2rem;
+  height: 32rem;
+  position: relative !important;
 }
-nav {
-  position: fixed;
-  display: block;
-  background-color: var(--modal);
-  height: 100%;
-  min-width: 180px;
-  max-width: 300px;
-  width: 80%;
-  border-radius: 0 4px 4px 0;
-  transition: all 0.6s;
-  z-index: 6;
+.theme-n-log {
+  margin-top: 2rem;
 }
 .user-card {
   position: relative;
-  text-align: left;
-  padding: 2rem;
-}
-.user-card img {
-  width: 3rem;
-  margin-top: 0.3rem;
-  border-radius: 1.5rem;
+  text-align: center;
+  padding: 0.4rem
 }
 .user-card label {
-  position: absolute;
-  top: 50%;
-  padding-left: 1rem;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
   font-weight: 600;
-}
-.nav-section-links {
-  text-align: left;
-  list-style-type: none;
-  padding: 0;
-  margin-top: 0;
-  width: 100%;
-}
-.nav-section-links a {
-  box-sizing: border-box;
-  position: relative;
-  width: 95%;
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
-  color: inherit;
-  text-decoration: none;
-  display: list-item;
-  transition-duration: 0.4s;
-  border-radius: 0 2rem 2rem 0;
-  font-weight: 500;
-  font-size: 1.1rem;
-}
-.nav-section-links a.router-link-exact-active {
-  background-color: var(--control);
-  color: var(--accent);
-}
-.nav-section-links a.router-link-exact-active label {
-  color: inherit;
-  color: var(--foreground);
-}
-.nav-section-links ion-icon {
-  padding-top: 0.3rem;
-  height: 1.6rem;
-  width: 1.6rem;
-}
-.nav-section-links label {
-  margin: 0 0 0 1rem;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
 }
 header {
   background-color: transparent;
@@ -139,14 +60,14 @@ header {
   text-align: left;
   width: 100%;
   z-index: 2;
-  padding: 2rem 1.2rem 1rem 1.2rem;
+  padding: 2rem 1.2rem 0.5rem 1.2rem;
   display: flex;
   position: relative;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   max-width: 600px;
-  margin: 0 auto 1.5rem auto;
+  margin: auto;
 }
 header * {
   margin: 0.4rem;
@@ -181,19 +102,14 @@ header * {
 .noned {
   display: none !important;
 }
-.slide {
-  transform: translateX(-303px);
-}
 .sing-out {
   color: inherit;
   text-decoration: none;
   font-weight: 600;
 }
-.footer {
+footer {
   position: absolute;
-  text-align: center;
-  bottom: 1rem;
-  width: 100%;
+  bottom: 2rem;
 }
 footer * {
   text-decoration: none;
@@ -206,18 +122,7 @@ footer * {
 }
 .about {
   text-align: justify;
-  margin: 2rem;
-}
-.dark-scheme {
-  --accent: #5f55b6;
-  --accent80: #5f55b6a5;
-  --background: #202020;
-  --active: #202020da;
-  --foreground: #f7f7f7;
-  --modal: black;
-  --shadow: #53535340;
-  --dropshadow: 0px 1px 6px 0px rgba(187, 187, 187, 0.2);
-  --control: #333333;
+  margin: 1rem;
 }
 @media (hover: hover) {
   .nav-section-links a:hover {
@@ -237,7 +142,7 @@ footer * {
   .sing-out:hover {
     opacity: 0.8;
   }
-  footer *:hover {
+  footer a:hover {
     text-decoration: underline var(--accent);
     color: var(--accent);
     cursor: pointer;
@@ -274,22 +179,24 @@ export default {
       })
     },
     toggleNavigation: function () {
-      this.locationTitle = this.createTitle()
-      var overlay = this.$refs.navOverlay
-      var nav = this.$refs.navSlide
+      var overlay = this.$refs.overlay
       if (
-        nav.classList.contains('slide') &&
+        overlay.classList.contains('push') &&
         overlay.classList.contains('noned')
       ) {
         overlay.classList.remove('noned')
         overlay.classList.remove('hide')
-        nav.classList.remove('slide')
-      } else {
-        nav.classList.add('slide')
-        overlay.classList.add('hide')
         setTimeout(function () {
-          overlay.classList.add('noned')
-        }, 600)
+          overlay.classList.remove('push')
+        }, 1)
+      } else {
+        overlay.classList.add('push')
+        setTimeout(function () {
+          overlay.classList.add('hide')
+          setTimeout(function () {
+            overlay.classList.add('noned')
+          }, 200)
+        }, 100)
       }
     },
     createTitle: function () {
@@ -306,23 +213,21 @@ export default {
       }
     },
     setScheme: function () {
-      var app = document.getElementById('app')
       if (localStorage.getItem('customDark') !== '1') {
-        app.classList.add('dark-scheme')
+        document.body.classList.add('dark-scheme')
         localStorage.setItem('customDark', '1')
       } else {
-        app.classList.remove('dark-scheme')
+        document.body.classList.remove('dark-scheme')
         localStorage.setItem('customDark', '0')
       }
     }
   },
   mounted () {
     this.locationTitle = this.createTitle()
-    var app = document.getElementById('app')
     if (localStorage.getItem('customDark') === '1') {
-      app.classList.add('dark-scheme')
+      document.body.classList.add('dark-scheme')
     } else {
-      app.classList.remove('dark-scheme')
+      document.body.classList.remove('dark-scheme')
     }
   }
 }
