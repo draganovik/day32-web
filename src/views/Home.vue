@@ -9,7 +9,7 @@
         <option value="3">Week view</option>
       </select>
       <select name="CalendarView" id="calendarSelector">
-        <option value="1">All calendars</option>
+        <option value="1">Mix calendars</option>
         <option value="2">Primary</option>
         <option value="3">Schedule</option>
         <option value="3">Bitrhdays</option>
@@ -30,7 +30,7 @@
         <option value="11">Tomato</option>
       </select>
       <button class="btn search-event">
-        <p>⌕</p>
+        ⌕
       </button>
     </div>
     <ul class="card-container">
@@ -94,13 +94,9 @@ export default {
   border: 1px solid var(--foreground) !important;
   padding: 0 2rem;
   height: 2rem;
-  box-sizing: border-box;
-}
-.search-event * {
-  float: left;
-  margin: auto;
+  max-height: 2rem;
   font-size: 1.45rem;
-  line-height: 1.45rem;
+  box-sizing: border-box;
 }
 ul {
   margin: 0;
