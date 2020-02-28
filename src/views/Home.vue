@@ -89,7 +89,6 @@ export default {
 <style scoped>
 .search-event {
   background-color: transparent;
-  height: 2.5rem;
   border-radius: 2rem;
   padding: 0;
   border: 1px solid var(--foreground) !important;
@@ -98,7 +97,7 @@ export default {
 .search-event * {
   float: left;
   margin: auto;
-  font-size: 2rem;
+  font-size: 1.45rem;
 }
 ul {
   margin: 0;
@@ -123,17 +122,20 @@ h1 {
   max-width: calc(512px + 2rem);
   height: min-content;
   width: 100%;
-  padding: 0 1rem;
-  margin: 2rem auto;
+  padding: 0 0.75rem;
+  margin: 1.5rem auto;
   box-sizing: border-box;
   justify-content: space-between;
 }
+.filters * {
+  margin: 0 0.25rem !important
+}
 #calendarSelector {
   all: unset;
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  line-height: 2.5rem;
-  padding: 0rem 2.5rem 0rem 0.8rem;
+  line-height: 2rem;
+  padding: 0rem 1rem 0rem 0.6rem;
   margin: 0;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -146,16 +148,16 @@ h1 {
       var(--foreground) 50%
     ),
     linear-gradient(135deg, var(--foreground) 50%, transparent 50%);
-  background-position: calc(100% - 1.35rem) calc(0.92rem + 2px),
-    calc(100% - 1rem) calc(0.92rem + 2px);
-  background-size: 0.35rem 0.35rem, 0.35rem 0.35rem, 0.2rem 1.5em;
+  background-position: calc(100% - 0.72rem) calc(0.86rem),
+    calc(100% - 0.5rem) calc(0.86rem);
+  background-size: 0.25rem 0.25rem, 0.25rem 0.25rem;
   background-repeat: no-repeat;
   border: 1px solid var(--foreground);
   border-radius: 2rem;
   float: left;
   min-width: 50px;
   max-height: 2.5rem !important;
-  height: 2.5rem;
+  height: 2rem;
 }
 @media (hover: hover) {
   .filters *:hover {
