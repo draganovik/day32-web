@@ -93,11 +93,14 @@ export default {
   padding: 0;
   border: 1px solid var(--foreground) !important;
   padding: 0 2rem;
+  height: 2rem;
+  box-sizing: border-box;
 }
 .search-event * {
   float: left;
   margin: auto;
   font-size: 1.45rem;
+  line-height: 1.45rem;
 }
 ul {
   margin: 0;
@@ -128,7 +131,8 @@ h1 {
   justify-content: space-between;
 }
 .filters * {
-  margin: 0 0.25rem !important
+  margin: 0 0.25rem !important;
+  width: 100% !important;
 }
 #calendarSelector {
   all: unset;
