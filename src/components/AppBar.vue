@@ -6,8 +6,8 @@
           <div class="user-card">
             <label ref="userName">Hello {{ user.name }}!</label>
           </div>
-          <hr>
-          <br>
+          <hr />
+          <br />
           <h2>Day32</h2>
           <p class="about">
             This web application is made using pure VueJS JavaScript framework to
@@ -17,9 +17,9 @@
           </p>
           <a class="clean-a" href="mailto:mladen@draganovik.com">mladen@draganovik.com</a>
           <div class="theme-n-log">
-          <button id="signout_button" class="btn" @click.stop="signout">Sign out</button>
-          <button class="btn cdark" @click.stop="setScheme">Toggle dark mode</button>
-        </div>
+            <button id="signout_button" class="btn" @click.stop="signout">Sign out</button>
+            <button class="btn cdark" @click.stop="setScheme">Toggle dark mode</button>
+          </div>
         </div>
         <footer>
           <p class="clean-a">Version {{ version }}</p>
@@ -49,7 +49,7 @@
 .user-card {
   position: relative;
   text-align: center;
-  padding: 0.4rem
+  padding: 0.4rem;
 }
 .user-card label {
   font-weight: 600;

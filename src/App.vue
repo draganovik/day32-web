@@ -120,7 +120,7 @@ body,
     display: block;
     margin: auto;
     margin-top: 1rem;
-    line-height: 1.1rem
+    line-height: 1.1rem;
   }
 }
 @media (prefers-color-scheme: dark) {

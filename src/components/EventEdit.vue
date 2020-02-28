@@ -2,13 +2,7 @@
   <section ref="overlay" class="overlay noned push" v-on:click="toggleEventCard()">
     <div class="modal-page" ref="page" v-on:click.stop>
       <div class="form">
-        <input
-          type="text"
-          placeholder="Title"
-          v-model="event.summary"
-          ref="finput"
-          tabindex="1"
-        />
+        <input type="text" placeholder="Title" v-model="event.summary" ref="finput" tabindex="1" />
         <input
           type="button"
           class="btn"
@@ -18,12 +12,7 @@
           value="Set without time"
           tabindex="-1"
         />
-        <input
-          type="datetime-local"
-          ref="sdate"
-          v-model="event.start.dateTime"
-          tabindex="2"
-        />
+        <input type="datetime-local" ref="sdate" v-model="event.start.dateTime" tabindex="2" />
         <input
           type="datetime-local"
           ref="edate"
@@ -31,19 +20,8 @@
           v-model="event.end.dateTime"
           tabindex="3"
         />
-        <input
-          type="date"
-          ref="adate"
-          class="noned"
-          v-model="event.start.date"
-          tabindex="4"
-        />
-        <input
-          type="text"
-          placeholder="Location"
-          v-model="event.location"
-          tabindex="5"
-        />
+        <input type="date" ref="adate" class="noned" v-model="event.start.date" tabindex="4" />
+        <input type="text" placeholder="Location" v-model="event.location" tabindex="5" />
         <select name="color" id="clr" v-model="event.colorId" tabindex="6">
           <option value="undefined">Default</option>
           <option value="1">Levander</option>
@@ -66,18 +44,14 @@
           v-model="event.description"
           tabindex="7"
         ></textarea>
-        <div
-          style="display:flex; justify-content: space-between; width:70%; margin: auto"
-        >
+        <div style="display:flex; justify-content: space-between; width:70%; margin: auto">
           <button class="btn ac" v-on:click="toggleEventCard()">Discard</button>
           <button
             class="btn ac"
             v-on:click="updateEvent()"
             tabindex="8"
             style="background-color: var(--accent); color: white"
-          >
-            Save
-          </button>
+          >Save</button>
         </div>
         <br />
       </div>
@@ -112,13 +86,17 @@ export default {
     },
     validateTime: function () {
       if (new Date(this.event.start.date)) {
-        if (new Date(this.event.start.date) <= new Date(this.event.end.date)) { return true }
+        if (new Date(this.event.start.date) <= new Date(this.event.end.date)) {
+          return true
+        }
       }
       if (new Date(this.event.start.dateTime)) {
         if (
           new Date(this.event.start.dateTime) <=
           new Date(this.event.end.dateTime)
-        ) { return true }
+        ) {
+          return true
+        }
       }
       return false
     },

@@ -140,16 +140,15 @@ h1 {
   box-sizing: border-box;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--foreground) 50%),
+  background-image: linear-gradient(
+      45deg,
+      transparent 50%,
+      var(--foreground) 50%
+    ),
     linear-gradient(135deg, var(--foreground) 50%, transparent 50%);
-  background-position:
-    calc(100% - 1.35rem) calc(0.92rem + 2px),
+  background-position: calc(100% - 1.35rem) calc(0.92rem + 2px),
     calc(100% - 1rem) calc(0.92rem + 2px);
-  background-size:
-    0.35rem 0.35rem,
-    0.35rem 0.35rem,
-    0.2rem 1.5em;
+  background-size: 0.35rem 0.35rem, 0.35rem 0.35rem, 0.2rem 1.5em;
   background-repeat: no-repeat;
   border: 1px solid var(--foreground);
   border-radius: 2rem;
