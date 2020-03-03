@@ -2,6 +2,11 @@
   <main class="home">
     <EventEdit :event="items[this.selectedItem]" :toggle="toggleEdit"></EventEdit>
     <EventCreate></EventCreate>
+    <section class="nav-bar">
+      <router-link class="btn" to="/about" >My events</router-link>
+      <router-link class="btn" to="/about" >Search</router-link>
+      <router-link class="btn" to="/about" >Public</router-link>
+    </section>
     <div class="filters">
       <select name="CalendarView" id="calendarSelector">
         <option value="1">List view</option>
@@ -87,6 +92,15 @@ export default {
 </script>
 
 <style scoped>
+.nav-bar {
+  display: flex;
+  width: 100%;
+  position: absolute !important;
+  bottom: 0;
+  z-index: 2;
+  background-color: rebeccapurple;
+  padding: 1rem;
+}
 .search-event {
   background-color: transparent;
   border-radius: 2rem;
