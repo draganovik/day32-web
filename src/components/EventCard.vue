@@ -221,6 +221,11 @@ export default {
           method: 'DELETE'
         })
       }
+    },
+    sameDay: function (d1, d2) {
+      return d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate()
     }
   },
   mounted () {
@@ -231,10 +236,7 @@ export default {
     marTop () {
       var pt = new Date(this.previousTime)
       var ct = new Date(this.item.start.dateTime)
-      if (
-        this.previousTime !== undefined &&
-          Math.floor(ct - pt) / (1000 * 60 * 60 * 24) >= 0.5
-      ) {
+      if (!this.sameDay(pt, ct)) {
         return '4rem'
       } else return '0rem'
     }

@@ -60,7 +60,6 @@ export default {
 ul {
   margin: 0;
   padding: 1.4rem;
-  padding-top: 2rem;
   text-align: center;
 }
 h1 {
