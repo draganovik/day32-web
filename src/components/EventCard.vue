@@ -1,15 +1,15 @@
 <template>
-  <li ref="card">
+  <li ref="card" v-bind:style="{ marginTop: marTop }">
     <div class="delete-event" ref="exmark" v-on:click.stop="deleteEvent()">{{ this.exmark }}</div>
     <label>{{ this.item.summary }}</label>
     <div class="tags">
       <button v-for="tg in this.tags" :key="item.id + tg.show()" class="tag">{{ tg.show() }}</button>
     </div>
     <div class="ltr">
-      <p>{{ this.getDate() }}</p>
       <b>
         <p>{{ this.getTime() }}</p>
       </b>
+      <p>{{ this.getDate() }}</p>
     </div>
   </li>
 </template>
@@ -17,7 +17,8 @@
 <script>
 export default {
   props: {
-    item: Object
+    item: Object,
+    previousTime: undefined
   },
   data: function () {
     return {
@@ -36,6 +37,12 @@ export default {
       }
       var now = new Date(new Date(Date.now()).toDateString())
       var diff = Math.floor((time - now) / (1000 * 60 * 60 * 24))
+      if (
+        this.previousTime !== undefined &&
+        Math.floor((this.previousTime - now) / (1000 * 60 * 60 * 24)) >= 1
+      ) {
+        this.marginTop = '3rem'
+      }
       if (diff === 0) {
         return (
           Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(time) +
@@ -219,6 +226,18 @@ export default {
   mounted () {
     this.tags = this.getTags()
     this.setColor()
+  },
+  computed: {
+    marTop () {
+      var pt = new Date(this.previousTime)
+      var ct = new Date(this.item.start.dateTime)
+      if (
+        this.previousTime !== undefined &&
+          Math.floor(ct - pt) / (1000 * 60 * 60 * 24) >= 0.5
+      ) {
+        return '4rem'
+      } else return '0rem'
+    }
   }
 }
 </script>

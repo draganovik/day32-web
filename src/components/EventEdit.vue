@@ -45,7 +45,7 @@
           tabindex="7"
         ></textarea>
         <div style="display:flex; justify-content: space-between; width:70%; margin: auto">
-          <button class="btn ac" v-on:click="toggleEventCard()">Discard</button>
+          <button class="btn ac" v-on:click="toggleEventCard()">Cancel</button>
           <button
             class="btn ac"
             v-on:click="updateEvent()"

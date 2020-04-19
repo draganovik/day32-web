@@ -1,9 +1,10 @@
 <template>
   <section>
     <section ref="overlay" class="overlay noned push" v-on:click="toggleNavigation()">
-      <div id="user-modal" class="modal-page">
+      <div id="user-modal" class="modal-page" v-on:click.stop>
         <div>
           <div class="user-card">
+            <button class="btn" id="esc" v-on:click="toggleNavigation()">x</button>
             <label ref="userName">Hello {{ user.name }}!</label>
           </div>
           <hr />
@@ -45,6 +46,13 @@
 }
 .theme-n-log {
   margin-top: 2rem;
+}
+#esc {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.7rem;
+  position: absolute;
+  top: -0.5rem;
+  right: 0;
 }
 .user-card {
   position: relative;
