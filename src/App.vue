@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <Login v-if="!this.appAuthState"></Login>
-    <section v-if="this.appAuthState" id="app-interface">
-      <AppBar></AppBar>
+    <Login v-if="!this.appAuthState" />
+    <section
+      v-if="this.appAuthState"
+      id="app-interface"
+    >
+      <AppBar />
       <router-view />
     </section>
   </div>
@@ -27,7 +30,7 @@ export default {
     ...mapState(['appAuthState'])
   },
   beforeCreate () {
-    this.$gapi.isSignedIn().then(result => {
+    this.$gapi.isSignedIn().then((result) => {
       this.setAuthState(result)
     })
   }
@@ -149,5 +152,82 @@ body,
   --shadow: #53535340;
   --dropshadow: 0px 1px 6px 0px rgba(187, 187, 187, 0.2);
   --control: #333333;
+}
+.form {
+  text-align: center;
+  width: 100%;
+  max-width: 512px;
+  min-width: 300px;
+}
+.form select {
+  all: unset;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: linear-gradient(
+      45deg,
+      transparent 50%,
+      var(--foreground) 50%
+    ),
+    linear-gradient(135deg, var(--foreground) 50%, transparent 50%);
+  background-position: calc(100% - 1.35rem) calc(1.15rem),
+    calc(100% - 1rem) calc(1.15rem);
+  background-size: 0.35rem 0.35rem, 0.35rem 0.35rem, 0.2rem 1.5em;
+  background-repeat: no-repeat;
+}
+.form input,
+.form textarea,
+.form select {
+  display: block;
+  margin: 1rem;
+  padding: 0.6rem 1rem;
+  text-align: center;
+  margin: 0.8rem auto;
+  width: 70%;
+  background-color: var(--control);
+  border-radius: 6px;
+  box-sizing: border-box;
+  border: none;
+  resize: none;
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 1.2rem;
+}
+textarea {
+  text-align: left !important;
+  height: 6rem;
+}
+#btn-action {
+  user-select: none;
+  position: fixed;
+  bottom: 6vh;
+  right: 4vw;
+  border-radius: 2rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  box-sizing: border-box;
+  transition-duration: 0.2s;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.8rem;
+  background-color: var(--accent);
+  color: white;
+  z-index: 3;
+}
+#btn-action:active {
+  border-color: var(--accent) !important;
+}
+.ac {
+  padding: 0.4rem 0;
+  width: calc(50% - 1rem);
+}
+@media (hover: hover) {
+  #btn-action:hover {
+    cursor: pointer;
+    background-color: var(--accent) !important;
+  }
 }
 </style>

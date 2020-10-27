@@ -1,33 +1,45 @@
 <template>
   <main class="home">
-    <EventEdit :event="items[this.selectedItem]" :toggle="toggleEdit"></EventEdit>
-    <EventCreate></EventCreate>
+    <ModalEventEdit
+      :event="items[this.selectedItem]"
+      :toggle="toggleEdit"
+    />
+    <EventCreate />
     <ul class="card-container">
       <EventCard
         v-for="item in items"
         :key="item.id"
         :item="item"
-        :previousTime="items.indexOf(item) > 0 ? items[items.indexOf(item)-1].start.dateTime : undefined"
-        v-on:click.native="selectEvent(items.indexOf(item))"
-      ></EventCard>
-      <h1 class="h1-center" v-if="items.length < 1">You have no upcoming events!</h1>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+        :previous-time="
+          items.indexOf(item) > 0
+            ? items[items.indexOf(item) - 1].start.dateTime
+            : undefined
+        "
+        @click.native="selectEvent(items.indexOf(item))"
+      />
+      <h1
+        class="h1-center"
+        v-if="items.length < 1"
+      >
+        You have no upcoming events!
+      </h1>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
     </ul>
-    <br />
+    <br>
   </main>
 </template>
 
 <script>
 import EventCard from '@/components/EventCard.vue'
-import EventEdit from '@/components/EventEdit.vue'
+import ModalEventEdit from '@/components/ModalEventEdit.vue'
 import EventCreate from '@/components/EventCreate.vue'
 
 export default {
-  name: 'home',
+  name: 'Home',
   data: function () {
     return {
       selectedItem: -1,
@@ -37,7 +49,7 @@ export default {
   components: {
     EventCard,
     EventCreate,
-    EventEdit
+    ModalEventEdit
   },
   methods: {
     selectEvent: function (itemId) {
