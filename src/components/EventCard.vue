@@ -1,9 +1,24 @@
 <template>
-  <li ref="card" v-bind:style="{ marginTop: marTop }">
-    <div class="delete-event" ref="exmark" v-on:click.stop="deleteEvent()">{{ this.exmark }}</div>
+  <li
+    ref="card"
+    :style="{ marginTop: marTop }"
+  >
+    <div
+      class="delete-event"
+      ref="exmark"
+      @click.stop="deleteEvent()"
+    >
+      {{ this.exmark }}
+    </div>
     <label>{{ this.item.summary }}</label>
     <div class="tags">
-      <button v-for="tg in this.tags" :key="item.id + tg.show()" class="tag">{{ tg.show() }}</button>
+      <button
+        v-for="tg in this.tags"
+        :key="item.id + tg.show()"
+        class="tag"
+      >
+        {{ tg.show() }}
+      </button>
     </div>
     <div class="ltr">
       <b>

@@ -1,88 +1,136 @@
 <template>
-  <section ref="overlay" class="overlay noned push" v-on:click="toggleEventCard()">
-    <div class="modal-page" ref="page" v-on:click.stop>
-      <div class="form">
-        <input type="text" placeholder="Title" v-model="event.summary" ref="finput" tabindex="1" />
-        <input
-          type="button"
-          class="btn"
-          style="width:70%;box-sizing:border-box;"
-          ref="adbtn"
-          v-on:click="allDay()"
-          value="Set without time"
-          tabindex="-1"
-        />
-        <input type="datetime-local" ref="sdate" v-model="event.start.dateTime" tabindex="2" />
-        <input
-          type="datetime-local"
-          ref="edate"
-          class="tdate"
-          v-model="event.end.dateTime"
-          tabindex="3"
-        />
-        <input type="date" ref="adate" class="noned" v-model="event.start.date" tabindex="4" />
-        <input type="text" placeholder="Location" v-model="event.location" tabindex="5" />
-        <select name="color" id="clr" v-model="event.colorId" tabindex="6">
-          <option value="undefined">Default</option>
-          <option value="1">Levander</option>
-          <option value="2">Sage</option>
-          <option value="3">Grape</option>
-          <option value="4">Flamingo</option>
-          <option value="5">Banana</option>
-          <option value="6">Tangerine</option>
-          <option value="7">Peacock</option>
-          <option value="8">Graphite</option>
-          <option value="9">Blueberry</option>
-          <option value="10">Basil</option>
-          <option value="11">Tomato</option>
-        </select>
-        <textarea
-          name="desc"
-          rows="8"
-          cols="4"
-          placeholder="Description"
-          v-model="event.description"
-          tabindex="7"
-        ></textarea>
-        <div style="display:flex; justify-content: space-between; width:70%; margin: auto">
-          <button class="btn ac" v-on:click="toggleEventCard()">Cancel</button>
-          <button
-            class="btn ac"
-            v-on:click="updateEvent()"
-            tabindex="8"
-            style="background-color: var(--accent); color: white"
-          >Save</button>
-        </div>
-        <br />
+  <Modal ref="modal">
+    <div class="form">
+      <input
+        type="text"
+        placeholder="Title"
+        v-model="event.summary"
+        ref="finput"
+        tabindex="1"
+      >
+      <input
+        type="button"
+        class="btn"
+        style="width: 70%; box-sizing: border-box"
+        ref="adbtn"
+        @click="allDay()"
+        value="Set without time"
+        tabindex="-1"
+      >
+      <input
+        type="datetime-local"
+        ref="sdate"
+        v-model="event.start.dateTime"
+        tabindex="2"
+      >
+      <input
+        type="datetime-local"
+        ref="edate"
+        class="tdate"
+        v-model="event.end.dateTime"
+        tabindex="3"
+      >
+      <input
+        type="date"
+        ref="adate"
+        class="noned"
+        v-model="event.start.date"
+        tabindex="4"
+      >
+      <input
+        type="text"
+        placeholder="Location"
+        v-model="event.location"
+        tabindex="5"
+      >
+      <select
+        name="color"
+        id="clr"
+        v-model="event.colorId"
+        tabindex="6"
+      >
+        <option value="undefined">
+          Default
+        </option>
+        <option value="1">
+          Levander
+        </option>
+        <option value="2">
+          Sage
+        </option>
+        <option value="3">
+          Grape
+        </option>
+        <option value="4">
+          Flamingo
+        </option>
+        <option value="5">
+          Banana
+        </option>
+        <option value="6">
+          Tangerine
+        </option>
+        <option value="7">
+          Peacock
+        </option>
+        <option value="8">
+          Graphite
+        </option>
+        <option value="9">
+          Blueberry
+        </option>
+        <option value="10">
+          Basil
+        </option>
+        <option value="11">
+          Tomato
+        </option>
+      </select>
+      <textarea
+        name="desc"
+        rows="8"
+        cols="4"
+        placeholder="Description"
+        v-model="event.description"
+        tabindex="7"
+      />
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          width: 70%;
+          margin: auto;
+        "
+      >
+        <button
+          class="btn ac"
+          @click="toggleModal()"
+        >
+          Cancel
+        </button>
+        <button
+          class="btn ac"
+          @click="updateEvent()"
+          tabindex="8"
+          style="background-color: var(--accent); color: white"
+        >
+          Save
+        </button>
       </div>
+      <br>
     </div>
-  </section>
+  </Modal>
 </template>
 
 <script>
+import Modal from '@/components/TemplateModal.vue'
 export default {
+  components: {
+    Modal
+  },
   methods: {
-    toggleEventCard: function () {
-      var overlay = this.$refs.overlay
-      if (
-        overlay.classList.contains('push') &&
-        overlay.classList.contains('noned')
-      ) {
-        overlay.classList.remove('noned')
-        overlay.classList.remove('hide')
-        setTimeout(function () {
-          overlay.classList.remove('push')
-        }, 1)
-        this.$refs.finput.focus()
-      } else {
-        overlay.classList.add('push')
-        setTimeout(function () {
-          overlay.classList.add('hide')
-          setTimeout(function () {
-            overlay.classList.add('noned')
-          }, 200)
-        }, 100)
-      }
+    toggleModal: function () {
+      this.$refs.modal.toggleModal()
     },
     validateTime: function () {
       if (new Date(this.event.start.date)) {
@@ -108,7 +156,7 @@ export default {
               'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
             ]
           })
-          .then(client => {
+          .then((client) => {
             var ev = {
               calendarId: 'primary',
               eventId: this.event.id,
@@ -131,7 +179,7 @@ export default {
             this.event.end.date = this.event.start.date
             return client.calendar.events.update(ev)
           })
-          .then(this.toggleEventCard())
+          .then(this.toggleModal())
           .then(
             setTimeout(function () {
               // TODO Replace logic with vuex no-reload solution
@@ -186,10 +234,7 @@ export default {
   },
   watch: {
     toggle: function (update, outdate) {
-      if (
-        this.$refs.overlay.classList.contains('noned') &&
-        update !== undefined
-      ) {
+      if (update !== undefined) {
         if (this.event.summary !== '') {
           if (
             (this.event.end.dateTime === undefined &&
@@ -213,7 +258,7 @@ export default {
               .toISOString()
               .substring(0, 16)
           }
-          this.toggleEventCard()
+          this.toggleModal()
         }
       }
     }

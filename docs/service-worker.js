@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.e3a463e48b4e935729e474544a827bcb.js"
+  "/precache-manifest.21db2002c22617f1894dc94afddcc87b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "Day32"});
