@@ -209,7 +209,7 @@ textarea {
   padding-top: 0.8rem;
   padding-bottom: 0.8rem;
   box-sizing: border-box;
-  transition-duration: 0.2s;
+  transition-duration: 0.3s;
   text-align: center;
   font-size: 1rem;
   line-height: 1.8rem;
