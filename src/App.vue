@@ -217,6 +217,10 @@ textarea {
   color: white;
   z-index: 3;
 }
+.btn-danger {
+  color: red !important;
+  border-color: red !important;
+}
 #btn-action:active {
   border-color: var(--accent) !important;
 }

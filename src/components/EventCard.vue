@@ -3,13 +3,6 @@
     ref="card"
     :style="{ marginTop: marTop }"
   >
-    <div
-      class="delete-event"
-      ref="exmark"
-      @click.stop="deleteEvent()"
-    >
-      {{ this.exmark }}
-    </div>
     <label>{{ this.item.summary }}</label>
     <div class="tags">
       <button
@@ -149,7 +142,7 @@ export default {
         list.push(obj)
       }
       if (this.item.attendees !== undefined) {
-        this.item.attendees.forEach(element => {
+        this.item.attendees.forEach((element) => {
           if (!element.self) {
             var obj = {
               key: element.email,
@@ -219,28 +212,12 @@ export default {
           break
       }
     },
-    deleteEvent: function () {
-      if (!this.toDelete) {
-        this.exmark = 'Delete event'
-        setTimeout(function () {
-          // TODO Replace logic with vuex no-reload solution
-          location.reload()
-        }, 800)
-        this.toDelete = true
-      } else {
-        this.exmark = 'Deleting...'
-        this.$gapi.request({
-          path:
-            'https://www.googleapis.com/calendar/v3/calendars/primary/events/' +
-            this.item.id,
-          method: 'DELETE'
-        })
-      }
-    },
     sameDay: function (d1, d2) {
-      return d1.getFullYear() === d2.getFullYear() &&
-    d1.getMonth() === d2.getMonth() &&
-    d1.getDate() === d2.getDate()
+      return (
+        d1.getFullYear() === d2.getFullYear() &&
+        d1.getMonth() === d2.getMonth() &&
+        d1.getDate() === d2.getDate()
+      )
     }
   },
   mounted () {
@@ -252,7 +229,7 @@ export default {
       var pt = new Date(this.previousTime)
       var ct = new Date(this.item.start.dateTime)
       if (!this.sameDay(pt, ct)) {
-        return '4rem'
+        return '1.5rem'
       } else return '0rem'
     }
   }
@@ -289,17 +266,6 @@ label {
   cursor: text;
   font-weight: 600;
   font-size: 1.4rem;
-}
-.delete-event {
-  border: 1px solid var(--control);
-  display: block;
-  position: absolute;
-  font-size: 1rem;
-  padding: 0.2rem 0.8rem;
-  right: 0.64rem;
-  top: 0.64rem;
-  color: var(--control);
-  border-radius: 4px;
 }
 p {
   padding: 0;
@@ -349,11 +315,6 @@ p {
   li:hover {
     border-color: var(--foreground) !important;
     cursor: pointer;
-  }
-  .delete-event:hover {
-    background-color: var(--accent80);
-    color: var(--foreground);
-    border-color: var(--foreground);
   }
 }
 </style>

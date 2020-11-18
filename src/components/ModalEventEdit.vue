@@ -94,6 +94,15 @@
         v-model="event.description"
         tabindex="7"
       />
+      <input
+        type="button"
+        class="btn btn-danger"
+        style="width: 70%; box-sizing: border-box"
+        ref="delete-event"
+        @click="deleteEvent()"
+        value="Delete event"
+        tabindex="8"
+      >
       <div
         style="
           display: flex;
@@ -187,6 +196,14 @@ export default {
             }, 1500)
           )
       }
+    },
+    deleteEvent: function () {
+      this.$gapi.request({
+        path:
+          'https://www.googleapis.com/calendar/v3/calendars/primary/events/' +
+          this.event.id,
+        method: 'DELETE'
+      })
     },
     allDay: function () {
       if (this.$refs.adate.classList.contains('noned')) {
