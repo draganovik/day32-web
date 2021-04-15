@@ -41,6 +41,7 @@
 
 <script>
 import Modal from '@/components/TemplateModal.vue'
+// import router from "../router";
 export default {
   components: {
     Modal
@@ -58,8 +59,9 @@ export default {
   methods: {
     signout: function () {
       this.$gapi.signOut().then(() => {
-        console.log('User disconnected.')
-        location.reload()
+        this.$gapi.isSignedIn().then((result) => {
+          location.reload()
+        })
       })
     },
     toggleModal: function () {

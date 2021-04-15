@@ -1,41 +1,8 @@
 <template>
   <div id="app">
-    <Login v-if="!this.appAuthState" />
-    <section
-      v-if="this.appAuthState"
-      id="app-interface"
-    >
-      <AppBar />
-      <router-view />
-    </section>
+    <router-view />
   </div>
 </template>
-<script>
-import AppBar from '@/components/AppBar.vue'
-import Login from '@/views/Login.vue'
-import { mapState, mapMutations } from 'vuex'
-
-export default {
-  components: {
-    AppBar,
-    Login
-  },
-  methods: {
-    ...mapMutations(['SET_AUTH_STATE']),
-    setAuthState: function (value) {
-      this.SET_AUTH_STATE(value)
-    }
-  },
-  computed: {
-    ...mapState(['appAuthState'])
-  },
-  beforeCreate () {
-    this.$gapi.isSignedIn().then((result) => {
-      this.setAuthState(result)
-    })
-  }
-}
-</script>
 <style>
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

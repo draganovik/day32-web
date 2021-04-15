@@ -1,39 +1,43 @@
 <template>
-  <main class="home">
-    <ModalEventEdit
-      :event="items[this.selectedItem]"
-      :toggle="toggleEdit"
-    />
-    <EventCreate />
-    <ul class="card-container">
-      <EventCard
-        v-for="item in items"
-        :key="item.id"
-        :item="item"
-        :previous-time="
-          items.indexOf(item) > 0
-            ? items[items.indexOf(item) - 1].start.dateTime
-            : undefined
-        "
-        @click.native="selectEvent(items.indexOf(item))"
+  <section>
+    <AppBar />
+    <main class="home">
+      <ModalEventEdit
+        :event="items[this.selectedItem]"
+        :toggle="toggleEdit"
       />
-      <h1
-        class="h1-center"
-        v-if="items.length < 1"
-      >
-        You have no upcoming events!
-      </h1>
+      <EventCreate />
+      <ul class="card-container">
+        <EventCard
+          v-for="item in items"
+          :key="item.id"
+          :item="item"
+          :previous-time="
+            items.indexOf(item) > 0
+              ? items[items.indexOf(item) - 1].start.dateTime
+              : undefined
+          "
+          @click.native="selectEvent(items.indexOf(item))"
+        />
+        <h1
+          class="h1-center"
+          v-if="items.length < 1"
+        >
+          You have no upcoming events!
+        </h1>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+      </ul>
       <br>
-      <br>
-      <br>
-      <br>
-      <br>
-    </ul>
-    <br>
-  </main>
+    </main>
+  </section>
 </template>
 
 <script>
+import AppBar from '@/components/AppBar.vue'
 import EventCard from '@/components/EventCard.vue'
 import ModalEventEdit from '@/components/ModalEventEdit.vue'
 import EventCreate from '@/components/EventCreate.vue'
@@ -49,7 +53,8 @@ export default {
   components: {
     EventCard,
     EventCreate,
-    ModalEventEdit
+    ModalEventEdit,
+    AppBar
   },
   methods: {
     selectEvent: function (itemId) {

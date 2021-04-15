@@ -1,19 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersistence from 'vuex-persist'
+import router from '../router'
 
 Vue.use(Vuex)
 const Storage = new VuexPersistence({
   key: 'Application Logic'
 })
 
-localStorage.setItem('version', '1.1.2002.2807')
+localStorage.setItem('version', '1.2.2104.1')
 
 export const store = new Vuex.Store({
   state: {
     appTheme: 'system',
     appVersion: '1.1.2002.2807',
-    appAuthState: true,
+    appAuthState: false,
     appUser: {
       name: 0,
       imageURL: 0
@@ -98,7 +99,12 @@ export const store = new Vuex.Store({
       })
     }
   },
-  actions: {},
+  actions: {
+    async isAuthenticated () {
+      let result = await router.app.$gapi.isSignedIn()
+      return result
+    }
+  },
   modules: {},
   plugins: [Storage.plugin]
 })

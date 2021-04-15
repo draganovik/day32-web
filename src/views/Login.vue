@@ -11,7 +11,7 @@
       >
       <br>
       <br>
-      <h1 style="margin-bottom:0">
+      <h1 style="margin-bottom: 0">
         Your personal calendar
       </h1>
       <h3>The way it's meant to be!</h3>
@@ -28,7 +28,7 @@
           width="20px"
           height="20px"
           viewBox="0 0 48 48"
-          style="display:block"
+          style="display: block"
         >
           <g>
             <path
@@ -60,19 +60,35 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+import router from '../router'
 export default {
   methods: {
+    ...mapMutations(['SET_AUTH_STATE']),
+    setAuthState: function (value) {
+      this.SET_AUTH_STATE(value)
+    },
     signin: function () {
       this.$gapi
         .signIn()
-        .then(user => {
-          console.log('Signed in as %s', user.name)
-          location.reload()
+        .then((user) => {
+          this.$gapi.isSignedIn().then((result) => {
+            this.setAuthState(result)
+            router.push({ name: 'Home' })
+          })
         })
-        .catch(err => {
+        .catch((err) => {
           console.error('Not signed in: %s', err.error)
         })
     }
+  },
+  computed: {
+    ...mapState(['appAuthState'])
+  },
+  beforeCreate () {
+    this.$gapi.isSignedIn().then((result) => {
+      this.setAuthState(result)
+    })
   }
 }
 </script>
