@@ -64,9 +64,9 @@ import { mapState, mapMutations } from 'vuex'
 import router from '../router'
 export default {
   methods: {
-    ...mapMutations(['SET_AUTH_STATE']),
+    ...mapMutations(['setAuthState']),
     setAuthState: function (value) {
-      this.SET_AUTH_STATE(value)
+      this.setAuthState(value)
     },
     signin: function () {
       this.$gapi

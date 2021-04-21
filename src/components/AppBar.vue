@@ -35,7 +35,7 @@ export default {
   created: async function () {
     this.$gapi.currentUser().then((user) => {
       if (user) {
-        this.$store.commit('LOAD_USER_DATA', user)
+        this.$store.commit('setLocalUserData', user)
       } else {
         console.log('No user is connected.')
       }

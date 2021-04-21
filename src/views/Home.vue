@@ -63,7 +63,7 @@ export default {
     }
   },
   mounted () {
-    this.$store.getters.GET_GOOGLE_CALENDARS(this.$gapi)
+    this.$store.getters.getEventsFromGoogle(this.$gapi)
   },
   computed: {
     items () {

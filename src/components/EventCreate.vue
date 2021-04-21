@@ -176,10 +176,10 @@ export default {
           }
         }
         if (this.$refs.adate.classList.contains('noned')) {
-          this.$store.commit('ADD_EVENT', [this.$gapi, a])
+          this.$store.commit('pushEventToGoogle', [this.$gapi, a])
           this.toggleModal()
         } else {
-          this.$store.commit('ADD_EVENT', [this.$gapi, b])
+          this.$store.commit('pushEventToGoogle', [this.$gapi, b])
           this.toggleModal()
         }
       }

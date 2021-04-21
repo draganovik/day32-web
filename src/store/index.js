@@ -44,7 +44,7 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
-    GET_GOOGLE_CALENDARS: state => gapi => {
+    getEventsFromGoogle: state => gapi => {
       gapi
         .request({
           path:
@@ -58,22 +58,22 @@ export const store = new Vuex.Store({
           }
         })
         .then(response => {
-          store.commit('SET_EVENTS', response.result.items)
+          store.commit('setGoogleEvents', response.result.items)
         })
     }
   },
   mutations: {
-    SET_AUTH_STATE: (state, value) => {
+    setAuthState: (state, value) => {
       state.appAuthState = value
     },
-    LOAD_USER_DATA: (state, user) => {
+    setLocalUserData: (state, user) => {
       state.appUser.name = user.name
       state.appUser.imageURL = user.image
     },
-    SET_EVENTS: (state, events) => {
+    setGoogleEvents: (state, events) => {
       state.googleCalendars.primary = events
     },
-    ADD_EVENT: (state, [gapi, event]) => {
+    pushEventToGoogle: (state, [gapi, event]) => {
       gapi
         ._libraryInit('client', {
           discoveryDocs: [
