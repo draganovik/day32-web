@@ -1,0 +1,235 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans:
+    'Inter', 'SF Pro Text', 'SF Pro Display', ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  color-scheme: light;
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --background: oklch(0.985 0.003 285);
+  --foreground: oklch(0.18 0.018 285);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.018 285);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.018 285);
+  --primary: oklch(0.5 0.17 286);
+  --primary-foreground: oklch(0.985 0.005 286);
+  --secondary: oklch(0.955 0.008 285);
+  --secondary-foreground: oklch(0.27 0.025 285);
+  --muted: oklch(0.96 0.006 285);
+  --muted-foreground: oklch(0.52 0.025 285);
+  --accent: oklch(0.94 0.025 286);
+  --accent-foreground: oklch(0.38 0.12 286);
+  --destructive: oklch(0.56 0.21 25);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.9 0.01 285);
+  --input: oklch(0.9 0.01 285);
+  --ring: oklch(0.58 0.15 286);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --background: oklch(0.15 0.014 285);
+  --foreground: oklch(0.95 0.008 285);
+  --card: oklch(0.19 0.016 285);
+  --card-foreground: oklch(0.95 0.008 285);
+  --popover: oklch(0.2 0.018 285);
+  --popover-foreground: oklch(0.95 0.008 285);
+  --primary: oklch(0.72 0.14 286);
+  --primary-foreground: oklch(0.18 0.025 285);
+  --secondary: oklch(0.25 0.018 285);
+  --secondary-foreground: oklch(0.92 0.01 285);
+  --muted: oklch(0.24 0.015 285);
+  --muted-foreground: oklch(0.68 0.022 285);
+  --accent: oklch(0.28 0.04 286);
+  --accent-foreground: oklch(0.84 0.09 286);
+  --destructive: oklch(0.67 0.2 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.31 0.018 285);
+  --input: oklch(0.31 0.018 285);
+  --ring: oklch(0.68 0.13 286);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --background: oklch(0.15 0.014 285);
+    --foreground: oklch(0.95 0.008 285);
+    --card: oklch(0.19 0.016 285);
+    --card-foreground: oklch(0.95 0.008 285);
+    --popover: oklch(0.2 0.018 285);
+    --popover-foreground: oklch(0.95 0.008 285);
+    --primary: oklch(0.72 0.14 286);
+    --primary-foreground: oklch(0.18 0.025 285);
+    --secondary: oklch(0.25 0.018 285);
+    --secondary-foreground: oklch(0.92 0.01 285);
+    --muted: oklch(0.24 0.015 285);
+    --muted-foreground: oklch(0.68 0.022 285);
+    --accent: oklch(0.28 0.04 286);
+    --accent-foreground: oklch(0.84 0.09 286);
+    --destructive: oklch(0.67 0.2 25);
+    --destructive-foreground: oklch(0.98 0 0);
+    --border: oklch(0.31 0.018 285);
+    --input: oklch(0.31 0.018 285);
+    --ring: oklch(0.68 0.13 286);
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    min-width: 320px;
+    min-height: 100%;
+    background: var(--background);
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    color: var(--foreground);
+    background:
+      radial-gradient(
+        circle at 50% -20%,
+        color-mix(in oklab, var(--primary) 9%, transparent),
+        transparent 38rem
+      ),
+      var(--background);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    color: var(--primary-foreground);
+    background: var(--primary);
+  }
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.day32-dialog {
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.985);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    overlay 160ms ease allow-discrete,
+    display 160ms ease allow-discrete;
+}
+
+.day32-dialog[open] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.day32-dialog::backdrop {
+  background: rgb(10 10 16 / 0%);
+  backdrop-filter: blur(0);
+  transition:
+    background-color 160ms ease,
+    backdrop-filter 160ms ease,
+    overlay 160ms ease allow-discrete,
+    display 160ms ease allow-discrete;
+}
+
+.day32-dialog[open]::backdrop {
+  background: rgb(10 10 16 / 58%);
+  backdrop-filter: blur(4px);
+}
+
+@starting-style {
+  .day32-dialog[open] {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.985);
+  }
+
+  .day32-dialog[open]::backdrop {
+    background: rgb(10 10 16 / 0%);
+    backdrop-filter: blur(0);
+  }
+}
+
+.page-enter-active,
+.page-leave-active,
+.notice-enter-active,
+.notice-leave-active {
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.page-enter-from,
+.page-leave-to,
+.notice-enter-from,
+.notice-leave-to {
+  opacity: 0;
+}
+
+.page-enter-from,
+.notice-enter-from {
+  transform: translateY(0.4rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

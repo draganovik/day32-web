@@ -1,200 +1,50 @@
+<script setup lang="ts">
+import { LoaderCircle, WifiOff } from '@lucide/vue'
+import { RouterView } from 'vue-router'
+
+import PwaUpdatePrompt from '@/components/PwaUpdatePrompt.vue'
+import { useOnlineStatus } from '@/composables/useOnlineStatus'
+import { useAccountsStore } from '@/stores/accounts'
+import { usePreferencesStore } from '@/stores/preferences'
+
+usePreferencesStore()
+const accounts = useAccountsStore()
+const { isOnline } = useOnlineStatus()
+</script>
+
 <template>
-  <div id="app">
-    <router-view />
+  <div class="min-h-screen bg-background text-foreground">
+    <Transition name="notice">
+      <div
+        v-if="!isOnline"
+        class="fixed top-3 left-1/2 z-80 flex w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 items-center justify-center gap-2 rounded-lg border border-amber-600/20 bg-amber-600 px-4 py-2.5 text-center text-sm font-medium text-white shadow-lg"
+        role="status"
+      >
+        <WifiOff class="size-4 shrink-0" aria-hidden="true" />
+        You’re offline. Calendar changes are paused.
+      </div>
+    </Transition>
+
+    <RouterView v-slot="{ Component }">
+      <Transition name="page" mode="out-in">
+        <component :is="Component" />
+      </Transition>
+    </RouterView>
+
+    <Transition name="notice">
+      <div
+        v-if="accounts.status === 'disconnecting'"
+        class="fixed inset-0 z-150 grid place-items-center bg-background/95 backdrop-blur-sm"
+        role="status"
+        aria-live="polite"
+      >
+        <div class="flex flex-col items-center gap-3 text-center">
+          <LoaderCircle class="size-6 animate-spin text-primary" aria-hidden="true" />
+          <p class="text-sm font-medium">Disconnecting Google…</p>
+        </div>
+      </div>
+    </Transition>
+
+    <PwaUpdatePrompt />
   </div>
 </template>
-<style>
-* {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
-}
-html,
-body,
-#app {
-  font-family: "Work Sans", sans-serif;
-  font-size: 11pt !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  background-color: var(--modal);
-  color: var(--foreground);
-  margin: 0%;
-  -webkit-text-size-adjust: none;
-  overflow: overlay;
-  min-height: 100vh;
-}
-#app {
-  background: url("./assets/login-back-1.png") no-repeat center center;
-  background-size: cover;
-  height: 100vh;
-}
-.btn {
-  all: initial;
-  display: inline-block;
-  text-align: center;
-  font-family: inherit;
-  border-radius: 4px;
-  padding: 0.4rem 1.4rem;
-  transition-duration: 0.3s;
-  background-color: var(--control);
-  color: var(--foreground);
-  cursor: pointer;
-  border: 1px solid var(--shadow) !important;
-}
-.tag {
-  all: initial;
-  display: inline-block;
-  text-align: center;
-  font-family: inherit;
-  font-size: 0.8rem;
-  height: 1.4rem;
-  border-radius: 2rem;
-  margin: 0.3rem 0.6rem 0.3rem 0;
-  padding: 0.15rem 0.5rem;
-  transition-duration: 0.3s;
-  background-color: var(--control);
-  color: var(--foreground) !important;
-  cursor: pointer;
-  border: 1px solid var(--control);
-}
-.tag:active {
-  background-color: var(--accent80);
-}
-#signout_button {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.9rem;
-}
-@media (hover: hover) {
-  .btn:hover {
-    background-color: var(--accent80) !important;
-    border: 1px solid var(--foreground) !important;
-  }
-  .tag:hover {
-    background-color: var(--active);
-  }
-}
-@media (prefers-color-scheme: light) {
-  :root {
-    --accent: #5f55b6;
-    --accent80: #5f55b6a5;
-    --background: #f7f7f7;
-    --active: #f0f0f0;
-    --foreground: #202020;
-    --modal: #f1f1f1;
-    --shadow: #13131360;
-    --dropshadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.3);
-    --control: #e4e4e4;
-  }
-  .cdark {
-    font-size: 0.84rem !important;
-    display: block;
-    margin: auto;
-    margin-top: 1rem;
-    line-height: 1.1rem;
-  }
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --accent: #5f55b6;
-    --accent80: #5f55b6a5;
-    --background: #202020;
-    --active: #202020da;
-    --foreground: #f7f7f7;
-    --modal: black;
-    --shadow: #53535340;
-    --dropshadow: 0px 1px 6px 0px rgba(187, 187, 187, 0.2);
-    --control: #333333;
-  }
-  .cdark {
-    display: none;
-  }
-}
-.dark-scheme {
-  --accent: #5f55b6;
-  --accent80: #5f55b6a5;
-  --background: #202020;
-  --active: #202020da;
-  --foreground: #f7f7f7;
-  --modal: black;
-  --shadow: #53535340;
-  --dropshadow: 0px 1px 6px 0px rgba(187, 187, 187, 0.2);
-  --control: #333333;
-}
-.form {
-  text-align: center;
-  width: 100%;
-  max-width: 512px;
-  min-width: 300px;
-}
-.form select {
-  all: unset;
-  margin: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: linear-gradient(
-      45deg,
-      transparent 50%,
-      var(--foreground) 50%
-    ),
-    linear-gradient(135deg, var(--foreground) 50%, transparent 50%);
-  background-position: calc(100% - 1.35rem) calc(1.15rem),
-    calc(100% - 1rem) calc(1.15rem);
-  background-size: 0.35rem 0.35rem, 0.35rem 0.35rem, 0.2rem 1.5em;
-  background-repeat: no-repeat;
-}
-.form input,
-.form textarea,
-.form select {
-  display: block;
-  margin: 1rem;
-  padding: 0.6rem 1rem;
-  text-align: center;
-  margin: 0.8rem auto;
-  width: 70%;
-  background-color: var(--control);
-  border-radius: 6px;
-  box-sizing: border-box;
-  border: none;
-  resize: none;
-  color: var(--foreground);
-  font-family: inherit;
-  font-size: 1.2rem;
-}
-textarea {
-  text-align: left !important;
-  height: 6rem;
-}
-#btn-action {
-  user-select: none;
-  position: fixed;
-  bottom: 6vh;
-  right: 4vw;
-  border-radius: 2rem;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  box-sizing: border-box;
-  transition-duration: 0.2s;
-  text-align: center;
-  font-size: 1rem;
-  line-height: 1.8rem;
-  background-color: var(--accent);
-  color: white;
-  z-index: 3;
-}
-#btn-action:active {
-  border-color: var(--accent) !important;
-}
-.ac {
-  padding: 0.4rem 0;
-  width: calc(50% - 1rem);
-}
-@media (hover: hover) {
-  #btn-action:hover {
-    cursor: pointer;
-    background-color: var(--accent) !important;
-  }
-}
-</style>

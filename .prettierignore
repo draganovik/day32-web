@@ -1,0 +1,7 @@
+dist
+coverage
+node_modules
+public/privacy-policy.html
+package-lock.json
+CODE_OF_CONDUCT.md
+.github/ISSUE_TEMPLATE/*.md
