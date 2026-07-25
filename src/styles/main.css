@@ -107,6 +107,7 @@
   html {
     min-width: 320px;
     min-height: 100%;
+    scrollbar-gutter: stable;
     background: var(--background);
   }
 
@@ -218,7 +219,6 @@
   opacity: 0;
 }
 
-.page-enter-from,
 .notice-enter-from {
   transform: translateY(0.4rem);
 }
