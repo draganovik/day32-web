@@ -165,7 +165,8 @@ async function disconnect(): Promise<void> {
         <div>
           <p class="text-sm font-medium">Private by design</p>
           <p class="mt-1 text-xs leading-5 text-muted-foreground">
-            Google access is kept in memory and cleared when you disconnect or close this tab.
+            Google access stays in this tab across reloads and clears when you disconnect, close the
+            tab, or the token expires.
           </p>
         </div>
       </div>

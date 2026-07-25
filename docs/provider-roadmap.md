@@ -1,18 +1,19 @@
 # Provider and multi-account roadmap
 
-The current release deliberately supports one in-memory Google connection. Its
-domain and adapter boundaries are designed for the following extension without
-changing calendar screens or event operations.
+The current release deliberately supports one tab-scoped Google connection.
+Its domain and adapter boundaries are designed for the following extension
+without changing calendar screens or event operations.
 
 ## Current boundary
 
 - `CalendarProviderAdapter` owns provider authorization and API translation.
+- Each adapter validates, exports, and restores its own provider session.
 - `CalendarProviderRegistry` creates adapters by provider identifier.
 - `accounts` owns connected adapter instances and active connection selection.
 - `calendar` aggregates standard `Calendar` and `CalendarEvent` models.
 - Vue components call store operations and never call provider APIs.
 
-## Phase 1: multiple ephemeral connections
+## Phase 1: multiple tab-scoped connections
 
 1. Add an account switcher and “connect another account” action.
 2. Create one adapter instance per connection.
@@ -20,10 +21,11 @@ changing calendar screens or event operations.
 4. Load each selected calendar concurrently and merge events by start time.
 5. Add connection/calendar identity to event filters and creation forms.
 6. Surface provider capabilities when editing fields not supported everywhere.
-7. Keep tokens in memory; reconnect all accounts after a full reload.
+7. Persist each adapter session in `sessionStorage` so reloads restore every
+   still-valid account without making provider credentials app-specific.
 
-This phase remains deployable as a static application, but repeated
-authorization becomes increasingly inconvenient.
+This phase remains deployable as a static application. Sessions end when the
+tab closes or a provider token expires.
 
 ## Phase 2: Microsoft Outlook adapter
 
@@ -37,7 +39,7 @@ authorization becomes increasingly inconvenient.
 5. Test mixed Google/Microsoft aggregation, edits, deletion, and authorization
    expiry independently.
 
-## Phase 3: durable account manager
+## Phase 3: long-lived account manager
 
 Durable multi-account sessions require a backend-for-frontend:
 

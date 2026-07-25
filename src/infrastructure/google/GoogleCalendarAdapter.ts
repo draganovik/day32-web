@@ -8,7 +8,7 @@ import type {
   CalendarProviderCapabilities,
   EventQuery,
 } from '@/domain/calendar'
-import type { CalendarProviderAdapter } from '@/domain/provider'
+import type { CalendarProviderAdapter, CalendarProviderSession } from '@/domain/provider'
 import { ProviderError } from '@/domain/provider'
 import { loadGoogleIdentityServices } from './googleIdentity'
 
@@ -21,6 +21,7 @@ const GOOGLE_SCOPES = [
   'https://www.googleapis.com/auth/calendar.events',
   'https://www.googleapis.com/auth/calendar.calendarlist.readonly',
 ].join(' ')
+const SESSION_EXPIRY_MARGIN_MS = 30_000
 
 const GOOGLE_COLOR_BY_ID: Readonly<Record<string, string>> = {
   '1': '#7986cb',
@@ -212,6 +213,50 @@ export class GoogleCalendarAdapter implements CalendarProviderAdapter {
     }
 
     return this.connection
+  }
+
+  restoreSession(session: CalendarProviderSession): CalendarConnection {
+    const accessToken = session.authorization.accessToken
+    const connection = session.connection
+
+    if (
+      session.provider !== 'google' ||
+      connection.provider !== 'google' ||
+      connection.account.provider !== 'google' ||
+      !isNonEmptyString(connection.id) ||
+      !isNonEmptyString(connection.account.id) ||
+      !isNonEmptyString(connection.account.displayName) ||
+      !isNonEmptyString(connection.account.email) ||
+      !isNonEmptyString(accessToken) ||
+      !Number.isFinite(session.expiresAt) ||
+      Date.now() + SESSION_EXPIRY_MARGIN_MS >= session.expiresAt
+    ) {
+      throw new ProviderError('Your saved Google session is no longer valid.', 'authorization')
+    }
+
+    this.accessToken = accessToken
+    this.expiresAt = session.expiresAt
+    this.connection = connection
+    return connection
+  }
+
+  exportSession(): CalendarProviderSession | undefined {
+    if (
+      !this.connection ||
+      !this.accessToken ||
+      Date.now() + SESSION_EXPIRY_MARGIN_MS >= this.expiresAt
+    ) {
+      return undefined
+    }
+
+    return {
+      provider: 'google',
+      connection: this.connection,
+      expiresAt: this.expiresAt,
+      authorization: {
+        accessToken: this.accessToken,
+      },
+    }
   }
 
   async disconnect(): Promise<void> {
@@ -409,4 +454,8 @@ export class GoogleCalendarAdapter implements CalendarProviderAdapter {
 
     return (await response.json()) as T
   }
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0
 }

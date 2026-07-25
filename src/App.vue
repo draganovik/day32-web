@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LoaderCircle, WifiOff } from '@lucide/vue'
+import { Analytics } from '@vercel/analytics/vue'
 import { RouterView } from 'vue-router'
 
 import PwaUpdatePrompt from '@/components/PwaUpdatePrompt.vue'
@@ -46,5 +47,6 @@ const { isOnline } = useOnlineStatus()
     </Transition>
 
     <PwaUpdatePrompt />
+    <Analytics />
   </div>
 </template>

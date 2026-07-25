@@ -96,23 +96,36 @@
 
       <h2>Storage and tokens</h2>
       <ul>
-        <li>Google access tokens are kept in browser memory and are not written to local storage.</li>
+        <li>
+          The current Google access token and account profile are saved in the browser’s
+          <code>sessionStorage</code> for this tab so the connection survives a page reload.
+        </li>
         <li>Calendar and event data are not persisted by Day32.</li>
         <li>Your theme preference may be stored locally in your browser.</li>
         <li>The installed app shell may be cached by the service worker for offline startup.</li>
       </ul>
 
       <p>
-        Reloading or closing the app clears its in-memory connection. Disconnecting also asks
-        Google to revoke the current access token.
+        Closing the tab clears its saved session. The connection also ends when the Google token
+        expires. Disconnecting clears the session immediately and asks Google to revoke the
+        current access token.
       </p>
 
       <h2>Third-party services</h2>
       <p>
         Google processes authentication and Calendar API requests under its own terms and privacy
         policies. The hosting provider may process ordinary web-server information such as IP
-        address, user agent, and request metadata. Day32 does not include advertising or analytics
-        trackers in the application.
+        address, user agent, and request metadata.
+      </p>
+      <p>
+        Day32 uses Vercel Web Analytics for anonymous, aggregated page-view statistics. It may
+        process the page path, referrer, approximate location, browser, operating system, and
+        device type. Vercel states that Web Analytics does not use cookies or collect personal
+        identifiers for cross-site tracking. Day32 does not send Google profile, calendar, or event
+        content as analytics events. Read
+        <a href="https://vercel.com/docs/analytics/privacy-policy">
+          Vercel’s Web Analytics privacy information</a
+        >.
       </p>
 
       <h2>Your choices</h2>

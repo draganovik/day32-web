@@ -19,11 +19,20 @@ export class ProviderError extends Error {
   }
 }
 
+export interface CalendarProviderSession {
+  provider: CalendarProviderId
+  connection: CalendarConnection
+  expiresAt: number
+  authorization: Readonly<Record<string, unknown>>
+}
+
 export interface CalendarProviderAdapter {
   readonly provider: CalendarProviderId
   readonly capabilities: CalendarProviderCapabilities
 
   connect(): Promise<CalendarConnection>
+  restoreSession(session: CalendarProviderSession): CalendarConnection
+  exportSession(): CalendarProviderSession | undefined
   disconnect(): Promise<void>
   listCalendars(): Promise<Calendar[]>
   listEvents(query: EventQuery): Promise<CalendarEvent[]>

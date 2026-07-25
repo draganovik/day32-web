@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
-import type { CalendarEventDraft } from '@/domain/calendar'
-import { mapDraftToGoogleEvent, mapGoogleEvent } from './GoogleCalendarAdapter'
+import type { CalendarConnection, CalendarEventDraft } from '@/domain/calendar'
+import type { CalendarProviderSession } from '@/domain/provider'
+import {
+  GoogleCalendarAdapter,
+  mapDraftToGoogleEvent,
+  mapGoogleEvent,
+} from './GoogleCalendarAdapter'
 
 describe('GoogleCalendarAdapter mapping', () => {
   it('maps an all-day Google event with its exclusive end date', () => {
@@ -42,5 +47,49 @@ describe('GoogleCalendarAdapter mapping', () => {
       start: { dateTime: draft.start },
       end: { dateTime: draft.end },
     })
+  })
+})
+
+describe('GoogleCalendarAdapter sessions', () => {
+  const connection: CalendarConnection = {
+    id: 'google:account-1',
+    provider: 'google',
+    account: {
+      id: 'account-1',
+      provider: 'google',
+      displayName: 'Calendar User',
+      email: 'calendar@example.com',
+    },
+    connectedAt: '2026-07-25T10:00:00.000Z',
+  }
+
+  it('restores and exports a valid Google session', () => {
+    const session: CalendarProviderSession = {
+      provider: 'google',
+      connection,
+      expiresAt: Date.now() + 60 * 60 * 1000,
+      authorization: {
+        accessToken: 'saved-access-token',
+      },
+    }
+    const adapter = new GoogleCalendarAdapter()
+
+    expect(adapter.restoreSession(session)).toEqual(connection)
+    expect(adapter.exportSession()).toEqual(session)
+  })
+
+  it('rejects an expired Google session', () => {
+    const adapter = new GoogleCalendarAdapter()
+
+    expect(() =>
+      adapter.restoreSession({
+        provider: 'google',
+        connection,
+        expiresAt: Date.now() - 1,
+        authorization: {
+          accessToken: 'expired-access-token',
+        },
+      }),
+    ).toThrow('Your saved Google session is no longer valid.')
   })
 })
